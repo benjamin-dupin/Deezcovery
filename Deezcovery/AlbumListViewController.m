@@ -97,17 +97,6 @@
     Album *newAlbum = [[Album alloc] init];
     newAlbum.title = self.fieldAlbum.text;
     [self.fieldAlbum setText:@""];
-    
-    [self.albumService createAlbum:newAlbum completion:^(Album *createdAlbum) {
-        [self.albums addObject:createdAlbum];
-        self.albums = [[self.albums sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            return [[obj1 name] compare:[obj2 name]];
-        }] mutableCopy];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableAlbums reloadData];
-        });
-    }];
 }
 
 

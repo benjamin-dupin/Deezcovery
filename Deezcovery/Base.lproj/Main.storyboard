@@ -7,7 +7,7 @@
         <!--Artist View Controller-->
         <scene sceneID="fAJ-gS-uPl">
             <objects>
-                <viewController id="Ez0-sq-ySg" userLabel="Artist View Controller" customClass="AlbumListViewController" sceneMemberID="viewController">
+                <viewController id="Ez0-sq-ySg" userLabel="Artist View Controller" customClass="ArtistListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Eij-mD-yCg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,6 +24,9 @@
                                 <state key="normal" title="Search">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTouchSearchButton:" destination="Ez0-sq-ySg" eventType="touchUpInside" id="pFT-jV-htV"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sGo-fD-yhN">
                                 <rect key="frame" x="0.0" y="58" width="320" height="510"/>
@@ -53,6 +56,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="artists" destination="sGo-fD-yhN" id="eJj-gr-EUk"/>
+                        <outlet property="searchButton" destination="bVu-6o-JtS" id="s84-pG-cEy"/>
+                        <outlet property="searchTxtField" destination="DES-zx-sQD" id="31t-oo-Que"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OHE-Pa-wE9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

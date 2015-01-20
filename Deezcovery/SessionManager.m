@@ -8,7 +8,7 @@
 
 #import "SessionManager.h"
 
-#define API_BASE_URL @"http://api.deezer.com/"
+#define API_BASE_URL @"http://api.deezer.com"
 @interface SessionManager () <NSURLSessionDelegate>
 @property (strong, nonatomic) NSURLSession *currentSession;
 @end

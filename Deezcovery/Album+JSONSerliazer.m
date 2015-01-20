@@ -28,8 +28,6 @@
 - (NSDictionary *)toJSON{
     
     NSMutableDictionary *json = [@{} mutableCopy];
-    if (self._id)
-        [json setObject:self._id forKey:@"id"];
     if (self.title)
         [json setObject:self.title forKey:@"title"];
     if (self.link)

@@ -13,9 +13,6 @@
 #pragma mark - Singleton Pattern -
 + (instancetype)sharedInstance;
 
-- (void)createAlbum:(Album *)album completion:(void (^)(Album *))completion;
-- (void)updateAlbum:(Album *)album completion:(void (^)(Album *))completion;
-- (void)deleteAlbum:(Album *)album completion:(void (^)(Album *))completion;
 - (void)getAlbumsWithcompletion:(void (^)(NSArray *))completion;
 
 @end

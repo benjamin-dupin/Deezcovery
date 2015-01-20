@@ -34,28 +34,6 @@ static AlbumService *sharedInstance = nil;
     return self;
 }
 
-- (void)createAlbum:(Album *)album completion:(void (^)(Album *))completion{
-    [[SessionManager sharedInstance] POST:@"/album" data:@{@"album" : album.toJSON} completion:^(NSDictionary *JSON) {
-        Album *createdAlbum = [Album albumFromJSON:JSON];
-        if (completion) completion(createdAlbum);
-    }];
-}
-
-- (void)updateAlbum:(Album *)album completion:(void (^)(Album *))completion{
-    [[SessionManager sharedInstance] PUT:@"/todo" data:@{@"todo" : album.toJSON} completion:^(NSDictionary *JSON) {
-        Album *updatedTodo = [Album albumFromJSON:JSON];
-        if (completion) completion(updatedTodo);
-    }];
-}
-
-- (void)deleteAlbum:(Album *)album completion:(void (^)(Album *))completion{
-    NSString *url = [NSString stringWithFormat:@"/todo/%@", album._id];
-    [[SessionManager sharedInstance] DELETE:url data:nil completion:^(NSDictionary *JSON) {
-        Album *deletedTodo = [Album albumFromJSON:JSON];
-        if (completion) completion(deletedTodo);
-    }];
-}
-
 - (void)getAlbumsWithcompletion:(void (^)(NSArray *))completion{
     [[SessionManager sharedInstance] LIST:@"artist/27/albums" completion:^(NSArray * JSON) {
         NSMutableArray *albums = [@[] mutableCopy];

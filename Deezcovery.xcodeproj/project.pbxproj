@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84C1DE291A6EDB420036F18C /* ArtistListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE281A6EDB420036F18C /* ArtistListViewController.m */; };
+		84C1DE2E1A6EDBF30036F18C /* ArtistService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE2D1A6EDBF30036F18C /* ArtistService.m */; };
+		84C1DE311A6EDC330036F18C /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE301A6EDC330036F18C /* Artist.m */; };
+		84C1DE341A6EDE680036F18C /* Artist+JSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE331A6EDE680036F18C /* Artist+JSONSerializer.m */; };
 		84CD8EF31A6E968400F2AF02 /* AlbumListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */; };
 		84FEC26D1A6E69B80013A252 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC26C1A6E69B80013A252 /* main.m */; };
 		84FEC2701A6E69B80013A252 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC26F1A6E69B80013A252 /* AppDelegate.m */; };
@@ -31,6 +35,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84C1DE271A6EDB420036F18C /* ArtistListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistListViewController.h; sourceTree = "<group>"; };
+		84C1DE281A6EDB420036F18C /* ArtistListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistListViewController.m; sourceTree = "<group>"; };
+		84C1DE2C1A6EDBF30036F18C /* ArtistService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistService.h; sourceTree = "<group>"; };
+		84C1DE2D1A6EDBF30036F18C /* ArtistService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistService.m; sourceTree = "<group>"; };
+		84C1DE2F1A6EDC330036F18C /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
+		84C1DE301A6EDC330036F18C /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artist.m; sourceTree = "<group>"; };
+		84C1DE321A6EDE680036F18C /* Artist+JSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Artist+JSONSerializer.h"; sourceTree = "<group>"; };
+		84C1DE331A6EDE680036F18C /* Artist+JSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Artist+JSONSerializer.m"; sourceTree = "<group>"; };
 		84CD8EF11A6E968400F2AF02 /* AlbumListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumListViewController.h; sourceTree = "<group>"; };
 		84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumListViewController.m; sourceTree = "<group>"; };
 		84FEC2671A6E69B80013A252 /* Deezcovery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deezcovery.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +84,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84C1DE211A6ED94E0036F18C /* album */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC29A1A6E6DBA0013A252 /* Album+JSONSerliazer.h */,
+				84FEC29B1A6E6DBA0013A252 /* Album+JSONSerliazer.m */,
+				84FEC29D1A6E6F110013A252 /* Album.h */,
+				84FEC29E1A6E6F110013A252 /* Album.m */,
+			);
+			name = album;
+			sourceTree = "<group>";
+		};
+		84C1DE221A6ED95B0036F18C /* artist */ = {
+			isa = PBXGroup;
+			children = (
+				84C1DE2F1A6EDC330036F18C /* Artist.h */,
+				84C1DE301A6EDC330036F18C /* Artist.m */,
+				84C1DE321A6EDE680036F18C /* Artist+JSONSerializer.h */,
+				84C1DE331A6EDE680036F18C /* Artist+JSONSerializer.m */,
+			);
+			name = artist;
+			sourceTree = "<group>";
+		};
+		84C1DE231A6EDA700036F18C /* track */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = track;
+			sourceTree = "<group>";
+		};
+		84C1DE241A6EDB020036F18C /* album */ = {
+			isa = PBXGroup;
+			children = (
+				84CD8EF11A6E968400F2AF02 /* AlbumListViewController.h */,
+				84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */,
+			);
+			name = album;
+			sourceTree = "<group>";
+		};
+		84C1DE251A6EDB0C0036F18C /* artist */ = {
+			isa = PBXGroup;
+			children = (
+				84C1DE271A6EDB420036F18C /* ArtistListViewController.h */,
+				84C1DE281A6EDB420036F18C /* ArtistListViewController.m */,
+			);
+			name = artist;
+			sourceTree = "<group>";
+		};
+		84C1DE261A6EDB160036F18C /* track */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = track;
+			sourceTree = "<group>";
+		};
+		84C1DE2A1A6EDBD20036F18C /* album */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2A41A6E72B20013A252 /* AlbumService.h */,
+				84FEC2A51A6E72B20013A252 /* AlbumService.m */,
+			);
+			name = album;
+			sourceTree = "<group>";
+		};
+		84C1DE2B1A6EDBDC0036F18C /* artist */ = {
+			isa = PBXGroup;
+			children = (
+				84C1DE2C1A6EDBF30036F18C /* ArtistService.h */,
+				84C1DE2D1A6EDBF30036F18C /* ArtistService.m */,
+			);
+			name = artist;
+			sourceTree = "<group>";
+		};
 		84FEC25E1A6E69B80013A252 = {
 			isa = PBXGroup;
 			children = (
@@ -135,9 +219,9 @@
 		84FEC2911A6E6A170013A252 /* services */ = {
 			isa = PBXGroup;
 			children = (
+				84C1DE2B1A6EDBDC0036F18C /* artist */,
+				84C1DE2A1A6EDBD20036F18C /* album */,
 				84FEC2921A6E6A220013A252 /* _core */,
-				84FEC2A41A6E72B20013A252 /* AlbumService.h */,
-				84FEC2A51A6E72B20013A252 /* AlbumService.m */,
 			);
 			name = services;
 			sourceTree = "<group>";
@@ -154,10 +238,9 @@
 		84FEC2961A6E6B700013A252 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				84FEC29A1A6E6DBA0013A252 /* Album+JSONSerliazer.h */,
-				84FEC29B1A6E6DBA0013A252 /* Album+JSONSerliazer.m */,
-				84FEC29D1A6E6F110013A252 /* Album.h */,
-				84FEC29E1A6E6F110013A252 /* Album.m */,
+				84C1DE231A6EDA700036F18C /* track */,
+				84C1DE221A6ED95B0036F18C /* artist */,
+				84C1DE211A6ED94E0036F18C /* album */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -165,8 +248,9 @@
 		84FEC2A01A6E724F0013A252 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				84CD8EF11A6E968400F2AF02 /* AlbumListViewController.h */,
-				84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */,
+				84C1DE261A6EDB160036F18C /* track */,
+				84C1DE251A6EDB0C0036F18C /* artist */,
+				84C1DE241A6EDB020036F18C /* album */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -272,12 +356,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				84CD8EF31A6E968400F2AF02 /* AlbumListViewController.m in Sources */,
+				84C1DE2E1A6EDBF30036F18C /* ArtistService.m in Sources */,
 				84FEC2701A6E69B80013A252 /* AppDelegate.m in Sources */,
 				84FEC2A61A6E72B20013A252 /* AlbumService.m in Sources */,
+				84C1DE311A6EDC330036F18C /* Artist.m in Sources */,
+				84C1DE341A6EDE680036F18C /* Artist+JSONSerializer.m in Sources */,
 				84FEC2951A6E6A460013A252 /* SessionManager.m in Sources */,
 				84FEC29F1A6E6F110013A252 /* Album.m in Sources */,
 				84FEC26D1A6E69B80013A252 /* main.m in Sources */,
 				84FEC29C1A6E6DBA0013A252 /* Album+JSONSerliazer.m in Sources */,
+				84C1DE291A6EDB420036F18C /* ArtistListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
