@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84CD8EF31A6E968400F2AF02 /* AlbumListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */; };
+		84FEC26D1A6E69B80013A252 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC26C1A6E69B80013A252 /* main.m */; };
+		84FEC2701A6E69B80013A252 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC26F1A6E69B80013A252 /* AppDelegate.m */; };
+		84FEC2761A6E69B80013A252 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FEC2741A6E69B80013A252 /* Main.storyboard */; };
+		84FEC2781A6E69B80013A252 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FEC2771A6E69B80013A252 /* Images.xcassets */; };
+		84FEC27B1A6E69B80013A252 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FEC2791A6E69B80013A252 /* LaunchScreen.xib */; };
+		84FEC2871A6E69B80013A252 /* DeezcoveryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC2861A6E69B80013A252 /* DeezcoveryTests.m */; };
+		84FEC2951A6E6A460013A252 /* SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC2941A6E6A460013A252 /* SessionManager.m */; };
+		84FEC29C1A6E6DBA0013A252 /* Album+JSONSerliazer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC29B1A6E6DBA0013A252 /* Album+JSONSerliazer.m */; };
+		84FEC29F1A6E6F110013A252 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC29E1A6E6F110013A252 /* Album.m */; };
+		84FEC2A61A6E72B20013A252 /* AlbumService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC2A51A6E72B20013A252 /* AlbumService.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84FEC2811A6E69B80013A252 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84FEC25F1A6E69B80013A252 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84FEC2661A6E69B80013A252;
+			remoteInfo = Deezcovery;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		84CD8EF11A6E968400F2AF02 /* AlbumListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumListViewController.h; sourceTree = "<group>"; };
+		84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumListViewController.m; sourceTree = "<group>"; };
+		84FEC2671A6E69B80013A252 /* Deezcovery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deezcovery.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84FEC26B1A6E69B80013A252 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84FEC26C1A6E69B80013A252 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		84FEC26E1A6E69B80013A252 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		84FEC26F1A6E69B80013A252 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		84FEC2751A6E69B80013A252 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		84FEC2771A6E69B80013A252 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		84FEC27A1A6E69B80013A252 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		84FEC2801A6E69B80013A252 /* DeezcoveryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeezcoveryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84FEC2851A6E69B80013A252 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84FEC2861A6E69B80013A252 /* DeezcoveryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeezcoveryTests.m; sourceTree = "<group>"; };
+		84FEC2931A6E6A460013A252 /* SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionManager.h; sourceTree = "<group>"; };
+		84FEC2941A6E6A460013A252 /* SessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionManager.m; sourceTree = "<group>"; };
+		84FEC29A1A6E6DBA0013A252 /* Album+JSONSerliazer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Album+JSONSerliazer.h"; sourceTree = "<group>"; };
+		84FEC29B1A6E6DBA0013A252 /* Album+JSONSerliazer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Album+JSONSerliazer.m"; sourceTree = "<group>"; };
+		84FEC29D1A6E6F110013A252 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		84FEC29E1A6E6F110013A252 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		84FEC2A41A6E72B20013A252 /* AlbumService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumService.h; sourceTree = "<group>"; };
+		84FEC2A51A6E72B20013A252 /* AlbumService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumService.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84FEC2641A6E69B80013A252 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84FEC27D1A6E69B80013A252 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84FEC25E1A6E69B80013A252 = {
+			isa = PBXGroup;
+			children = (
+				84FEC2691A6E69B80013A252 /* Deezcovery */,
+				84FEC2831A6E69B80013A252 /* DeezcoveryTests */,
+				84FEC2681A6E69B80013A252 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84FEC2681A6E69B80013A252 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2671A6E69B80013A252 /* Deezcovery.app */,
+				84FEC2801A6E69B80013A252 /* DeezcoveryTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84FEC2691A6E69B80013A252 /* Deezcovery */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2A01A6E724F0013A252 /* controllers */,
+				84FEC2961A6E6B700013A252 /* models */,
+				84FEC2911A6E6A170013A252 /* services */,
+				84FEC26E1A6E69B80013A252 /* AppDelegate.h */,
+				84FEC26F1A6E69B80013A252 /* AppDelegate.m */,
+				84FEC2741A6E69B80013A252 /* Main.storyboard */,
+				84FEC2771A6E69B80013A252 /* Images.xcassets */,
+				84FEC2791A6E69B80013A252 /* LaunchScreen.xib */,
+				84FEC26A1A6E69B80013A252 /* Supporting Files */,
+			);
+			path = Deezcovery;
+			sourceTree = "<group>";
+		};
+		84FEC26A1A6E69B80013A252 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC26B1A6E69B80013A252 /* Info.plist */,
+				84FEC26C1A6E69B80013A252 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84FEC2831A6E69B80013A252 /* DeezcoveryTests */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2861A6E69B80013A252 /* DeezcoveryTests.m */,
+				84FEC2841A6E69B80013A252 /* Supporting Files */,
+			);
+			path = DeezcoveryTests;
+			sourceTree = "<group>";
+		};
+		84FEC2841A6E69B80013A252 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2851A6E69B80013A252 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84FEC2911A6E6A170013A252 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2921A6E6A220013A252 /* _core */,
+				84FEC2A41A6E72B20013A252 /* AlbumService.h */,
+				84FEC2A51A6E72B20013A252 /* AlbumService.m */,
+			);
+			name = services;
+			sourceTree = "<group>";
+		};
+		84FEC2921A6E6A220013A252 /* _core */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC2931A6E6A460013A252 /* SessionManager.h */,
+				84FEC2941A6E6A460013A252 /* SessionManager.m */,
+			);
+			name = _core;
+			sourceTree = "<group>";
+		};
+		84FEC2961A6E6B700013A252 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				84FEC29A1A6E6DBA0013A252 /* Album+JSONSerliazer.h */,
+				84FEC29B1A6E6DBA0013A252 /* Album+JSONSerliazer.m */,
+				84FEC29D1A6E6F110013A252 /* Album.h */,
+				84FEC29E1A6E6F110013A252 /* Album.m */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
+		84FEC2A01A6E724F0013A252 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				84CD8EF11A6E968400F2AF02 /* AlbumListViewController.h */,
+				84CD8EF21A6E968400F2AF02 /* AlbumListViewController.m */,
+			);
+			name = controllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		84FEC2661A6E69B80013A252 /* Deezcovery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84FEC28A1A6E69B80013A252 /* Build configuration list for PBXNativeTarget "Deezcovery" */;
+			buildPhases = (
+				84FEC2631A6E69B80013A252 /* Sources */,
+				84FEC2641A6E69B80013A252 /* Frameworks */,
+				84FEC2651A6E69B80013A252 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Deezcovery;
+			productName = Deezcovery;
+			productReference = 84FEC2671A6E69B80013A252 /* Deezcovery.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84FEC27F1A6E69B80013A252 /* DeezcoveryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84FEC28D1A6E69B80013A252 /* Build configuration list for PBXNativeTarget "DeezcoveryTests" */;
+			buildPhases = (
+				84FEC27C1A6E69B80013A252 /* Sources */,
+				84FEC27D1A6E69B80013A252 /* Frameworks */,
+				84FEC27E1A6E69B80013A252 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84FEC2821A6E69B80013A252 /* PBXTargetDependency */,
+			);
+			name = DeezcoveryTests;
+			productName = DeezcoveryTests;
+			productReference = 84FEC2801A6E69B80013A252 /* DeezcoveryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84FEC25F1A6E69B80013A252 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "B'n'J";
+				TargetAttributes = {
+					84FEC2661A6E69B80013A252 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					84FEC27F1A6E69B80013A252 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 84FEC2661A6E69B80013A252;
+					};
+				};
+			};
+			buildConfigurationList = 84FEC2621A6E69B80013A252 /* Build configuration list for PBXProject "Deezcovery" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 84FEC25E1A6E69B80013A252;
+			productRefGroup = 84FEC2681A6E69B80013A252 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84FEC2661A6E69B80013A252 /* Deezcovery */,
+				84FEC27F1A6E69B80013A252 /* DeezcoveryTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84FEC2651A6E69B80013A252 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84FEC2761A6E69B80013A252 /* Main.storyboard in Resources */,
+				84FEC27B1A6E69B80013A252 /* LaunchScreen.xib in Resources */,
+				84FEC2781A6E69B80013A252 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84FEC27E1A6E69B80013A252 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84FEC2631A6E69B80013A252 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84CD8EF31A6E968400F2AF02 /* AlbumListViewController.m in Sources */,
+				84FEC2701A6E69B80013A252 /* AppDelegate.m in Sources */,
+				84FEC2A61A6E72B20013A252 /* AlbumService.m in Sources */,
+				84FEC2951A6E6A460013A252 /* SessionManager.m in Sources */,
+				84FEC29F1A6E6F110013A252 /* Album.m in Sources */,
+				84FEC26D1A6E69B80013A252 /* main.m in Sources */,
+				84FEC29C1A6E6DBA0013A252 /* Album+JSONSerliazer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84FEC27C1A6E69B80013A252 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84FEC2871A6E69B80013A252 /* DeezcoveryTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84FEC2821A6E69B80013A252 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84FEC2661A6E69B80013A252 /* Deezcovery */;
+			targetProxy = 84FEC2811A6E69B80013A252 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		84FEC2741A6E69B80013A252 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84FEC2751A6E69B80013A252 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		84FEC2791A6E69B80013A252 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84FEC27A1A6E69B80013A252 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84FEC2881A6E69B80013A252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		84FEC2891A6E69B80013A252 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84FEC28B1A6E69B80013A252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Deezcovery/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		84FEC28C1A6E69B80013A252 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Deezcovery/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		84FEC28E1A6E69B80013A252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DeezcoveryTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Deezcovery.app/Deezcovery";
+			};
+			name = Debug;
+		};
+		84FEC28F1A6E69B80013A252 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DeezcoveryTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Deezcovery.app/Deezcovery";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84FEC2621A6E69B80013A252 /* Build configuration list for PBXProject "Deezcovery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84FEC2881A6E69B80013A252 /* Debug */,
+				84FEC2891A6E69B80013A252 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84FEC28A1A6E69B80013A252 /* Build configuration list for PBXNativeTarget "Deezcovery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84FEC28B1A6E69B80013A252 /* Debug */,
+				84FEC28C1A6E69B80013A252 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84FEC28D1A6E69B80013A252 /* Build configuration list for PBXNativeTarget "DeezcoveryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84FEC28E1A6E69B80013A252 /* Debug */,
+				84FEC28F1A6E69B80013A252 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84FEC25F1A6E69B80013A252 /* Project object */;
+}
