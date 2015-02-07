@@ -11,5 +11,6 @@
 
 @interface ArtistService : NSObject
 + (instancetype)sharedInstance;
-- (NSArray *) getRelatedArtists:(NSString *) artistName completion:(void (^)(NSArray *))completion;
+
+- (NSMutableArray *) getRelatedArtists:(NSString *) artistName;
 @end

@@ -54,7 +54,12 @@ static SessionManager *sharedInstance = nil;
  **/
 - (void)GET:(NSString *)path completion:(void (^)(NSDictionary *))completion{
     
-    NSURL *url = [NSURL URLWithString:[API_BASE_URL stringByAppendingString:path]];
+    NSString *completeURL = [NSString stringWithFormat:@"%@%@", API_BASE_URL, path];
+    
+    //NSURL *url = [NSURL URLWithString:completeURL];
+    
+    NSURL *url = [completeURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     id completionHandler = ^(NSData *data,
                              NSURLResponse *response,
                              NSError *error) {
@@ -269,6 +274,36 @@ static SessionManager *sharedInstance = nil;
     [self GET:path completion:^(NSDictionary *JSON) {
         completion((NSArray *)JSON);
     }];
+}
+
+- (NSString *) getDataFrom:(NSString *)url{
+    NSString *completeURL = [NSString stringWithFormat:@"%@%@", API_BASE_URL, url];
+    
+    NSString *webUrl = [completeURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url2 = [NSURL URLWithString:webUrl];
+    NSData *data = [NSData dataWithContentsOfURL:url2];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"ret=%@", ret);
+    
+    /*
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setHTTPMethod:@"GET"];
+    [request setURL:[NSURL URLWithString:completeURL]];
+    
+    NSError *error = [[NSError alloc] init];
+    NSHTTPURLResponse *responseCode = nil;
+    
+    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    if([responseCode statusCode] != 200){
+        NSLog(@"Error getting %@, HTTP status code %i", completeURL, [responseCode statusCode]);
+        return nil;
+    }
+    
+    return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+     */
+    return nil;
 }
 
 @end

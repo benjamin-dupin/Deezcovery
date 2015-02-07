@@ -39,13 +39,23 @@ static ArtistService *sharedInstance = nil;
 /**
     Search related artist from artist name
  */
-- (void) getRelatedArtists:(NSString *)artistName completion:(void (^)(NSArray *))completion{
+- (NSMutableArray *) getRelatedArtists:(NSString *)artistName{
+    
+    NSLog(@"Allooooo");
     
     // Vive Objective-C qui ne sait pas concaténer...
-    NSString * searchArtistUrl = [NSString stringWithFormat:@"%@/%@/%@", @"/search/artist?q='", artistName, @"'"];
+    NSString *searchArtistUrl = [NSString stringWithFormat:@"%@%@", @"/search/artist?q=", artistName];
     
+    //NSLog(searchArtistUrl);
+    
+    NSLog(@"Get related...");
+    
+    NSMutableArray *artists = [@[] mutableCopy];
+    
+    NSString* json = [[SessionManager sharedInstance] getDataFrom:searchArtistUrl];
+    
+    /*
     [[SessionManager sharedInstance] LIST:searchArtistUrl completion:^(NSArray * JSON) {
-        NSMutableArray *artists = [@[] mutableCopy];
         NSDictionary *datas = [JSON objectAtIndex:0];
         
         for (NSDictionary *object in datas){
@@ -53,9 +63,10 @@ static ArtistService *sharedInstance = nil;
             [artists addObject:artist];
         }
         
-        if (completion) completion(artists);
-        
     }];
+     */
+    
+    return artists;
 }
 
 @end

@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Deezcovery/ArtistService.m"
-            timestampString = "443477809.546937"
+            filePath = "Deezcovery/SessionManager.m"
+            timestampString = "444998274.240554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-getRelatedArtists:completion:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Deezcovery/ArtistListViewController.m"
-            timestampString = "443477827.214743"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "-didTouchSearchButton:"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "-getDataFrom:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

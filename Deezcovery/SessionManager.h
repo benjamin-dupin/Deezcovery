@@ -21,4 +21,7 @@
 - (void)DELETE:(NSString *)path data:(NSDictionary *)JSON completion:(void (^)(NSDictionary *))completion;
 
 - (void)POST:(NSString *)path data:(NSDictionary *)JSON completion:(void (^)(NSDictionary *))completion;
+
+- (NSString*)getDataFrom:(NSString *)url;
+
 @end

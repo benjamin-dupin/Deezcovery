@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ArtistListViewController : UIViewController
+@interface ArtistListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
