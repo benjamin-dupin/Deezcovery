@@ -24,6 +24,7 @@
 		84FEC29C1A6E6DBA0013A252 /* Album+JSONSerliazer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC29B1A6E6DBA0013A252 /* Album+JSONSerliazer.m */; };
 		84FEC29F1A6E6F110013A252 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC29E1A6E6F110013A252 /* Album.m */; };
 		84FEC2A61A6E72B20013A252 /* AlbumService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEC2A51A6E72B20013A252 /* AlbumService.m */; };
+		852655B71A8A30D500A81E29 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 852655B61A8A30D500A81E29 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		84FEC29E1A6E6F110013A252 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		84FEC2A41A6E72B20013A252 /* AlbumService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumService.h; sourceTree = "<group>"; };
 		84FEC2A51A6E72B20013A252 /* AlbumService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumService.m; sourceTree = "<group>"; };
+		852655B61A8A30D500A81E29 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				852655B71A8A30D500A81E29 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +176,7 @@
 		84FEC25E1A6E69B80013A252 = {
 			isa = PBXGroup;
 			children = (
+				852655B61A8A30D500A81E29 /* CoreData.framework */,
 				84FEC2691A6E69B80013A252 /* Deezcovery */,
 				84FEC2831A6E69B80013A252 /* DeezcoveryTests */,
 				84FEC2681A6E69B80013A252 /* Products */,
