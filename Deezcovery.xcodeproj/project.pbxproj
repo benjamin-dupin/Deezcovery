@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8431D7A61A89E53A00E5A74F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8431D7A41A89E53A00E5A74F /* Main.storyboard */; };
+		843218F01A8BBAF800902381 /* Deezcovery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 843218EE1A8BBAF800902381 /* Deezcovery.xcdatamodeld */; };
 		84C1DE291A6EDB420036F18C /* ArtistListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE281A6EDB420036F18C /* ArtistListViewController.m */; };
 		84C1DE2E1A6EDBF30036F18C /* ArtistService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE2D1A6EDBF30036F18C /* ArtistService.m */; };
 		84C1DE311A6EDC330036F18C /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C1DE301A6EDC330036F18C /* Artist.m */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		8431D7A51A89E53A00E5A74F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		843218EF1A8BBAF800902381 /* Deezcovery.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Deezcovery.xcdatamodel; sourceTree = "<group>"; };
 		84C1DE271A6EDB420036F18C /* ArtistListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistListViewController.h; sourceTree = "<group>"; };
 		84C1DE281A6EDB420036F18C /* ArtistListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistListViewController.m; sourceTree = "<group>"; };
 		84C1DE2C1A6EDBF30036F18C /* ArtistService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistService.h; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		84FEC2691A6E69B80013A252 /* Deezcovery */ = {
 			isa = PBXGroup;
 			children = (
+				843218EE1A8BBAF800902381 /* Deezcovery.xcdatamodeld */,
 				8431D7A41A89E53A00E5A74F /* Main.storyboard */,
 				84FEC2A01A6E724F0013A252 /* controllers */,
 				84FEC2961A6E6B700013A252 /* models */,
@@ -362,6 +365,7 @@
 				84C1DE311A6EDC330036F18C /* Artist.m in Sources */,
 				84C1DE341A6EDE680036F18C /* Artist+JSONSerializer.m in Sources */,
 				84FEC2951A6E6A460013A252 /* SessionManager.m in Sources */,
+				843218F01A8BBAF800902381 /* Deezcovery.xcdatamodeld in Sources */,
 				84FEC29F1A6E6F110013A252 /* Album.m in Sources */,
 				84FEC26D1A6E69B80013A252 /* main.m in Sources */,
 				84FEC29C1A6E6DBA0013A252 /* Album+JSONSerliazer.m in Sources */,
@@ -568,6 +572,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		843218EE1A8BBAF800902381 /* Deezcovery.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				843218EF1A8BBAF800902381 /* Deezcovery.xcdatamodel */,
+			);
+			currentVersion = 843218EF1A8BBAF800902381 /* Deezcovery.xcdatamodel */;
+			path = Deezcovery.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 84FEC25F1A6E69B80013A252 /* Project object */;
 }

@@ -10,6 +10,7 @@
 
 #import "AlbumService.h"
 #import "Album.h"
+#import "Artist.h"
 
 @interface AlbumListViewController ()
 
@@ -38,15 +39,6 @@
     [self configureOutlets];
     
     [self loadAlbums];
-    
-    NSLog(@"test");
-    
-    NSLog(@"%ld",(unsigned long)[self.artistAlbums count]);
-    
-    for (Album *album in self.artistAlbums) {
-        NSLog(@"OKOKOK");
-        NSLog(album.title);
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,10 +74,12 @@
 }
 
 - (void) loadAlbums {
+    self.titleNavigationBar.topItem.title = @"test";
+    
     self.artistAlbums = [@[] mutableCopy];
     
     Album *album = [[Album alloc]init];
-    album.title = @"Toto";
+    album.title = self.artist.name;
     
     [self.artistAlbums addObject:album];
     
