@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Artist.h"
 
 @interface Album : NSObject
+@property (strong, nonatomic) Artist *artist;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *link;
 @property (strong, nonatomic) NSString *cover;

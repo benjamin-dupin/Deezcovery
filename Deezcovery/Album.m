@@ -20,6 +20,7 @@
         self.tracklist = @"tracklist";
         self.explicit_lyrics = NO;
         self.type = @"type";
+        self.artist = nil;
     }
     
     return self;

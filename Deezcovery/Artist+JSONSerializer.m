@@ -16,13 +16,17 @@
         return nil;
     
     Artist *artist = [[Artist alloc] init];
+    
     for (id key in JSON){
         NSLog(@"key: %@", key);
+        
         if([artist respondsToSelector:NSSelectorFromString(key)]){
-            NSLog(@"respond to selector!");
             [artist setValue:JSON[key] forKey:key];
+        } else if ([key isEqualToString:@"id"]) {
+            artist._id = JSON[key];
         }
     }
+    
     return artist;
 }
 

@@ -41,30 +41,48 @@ static ArtistService *sharedInstance = nil;
  */
 - (NSMutableArray *) getRelatedArtists:(NSString *)artistName{
     
-    NSLog(@"Allooooo");
+    // ==========================
+    // Search artist by name
+    // ==========================
     
-    // Vive Objective-C qui ne sait pas concaténer...
+    // Search artist URL
     NSString *searchArtistUrl = [NSString stringWithFormat:@"%@%@", @"/search/artist?q=", artistName];
     
-    //NSLog(searchArtistUrl);
+    // Get JSON string from request
+    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchArtistUrl];
     
-    NSLog(@"Get related...");
+    // Convert String to Dictionnary
+    NSData *webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+    NSLog(@"JSON DIct: %@", jsonDict);
     
+    // Artists Array
     NSMutableArray *artists = [@[] mutableCopy];
     
-    NSString* json = [[SessionManager sharedInstance] getDataFrom:searchArtistUrl];
+    NSDictionary *firstArtistFromSearch = [[jsonDict objectForKey:@"data"] objectAtIndex:0];
+    Artist *firstArtist = [Artist artistFromJSON:firstArtistFromSearch];
+    [artists addObject:firstArtist];
     
-    /*
-    [[SessionManager sharedInstance] LIST:searchArtistUrl completion:^(NSArray * JSON) {
-        NSDictionary *datas = [JSON objectAtIndex:0];
-        
-        for (NSDictionary *object in datas){
-            Artist *artist = [Artist artistFromJSON:object];
-            [artists addObject:artist];
-        }
-        
-    }];
-     */
+    // ==========================
+    // Search related artists
+    // ==========================
+    
+    // Related artists URL
+    NSString *searchRelatedArtistsUrl = [NSString stringWithFormat:@"%@%@%@", @"/artist/", firstArtist._id, @"/related"];
+    
+    // Get JSON
+    jsonString = [[SessionManager sharedInstance] getDataFrom:searchRelatedArtistsUrl];
+    
+    // Convert to dictionary
+    webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+    NSLog(@"JSON DIct: %@", jsonDict);
+    
+    for (NSDictionary *object in [jsonDict objectForKey:@"data"]) {
+        Artist *artist = [Artist artistFromJSON:object];
+        [artists addObject:artist];
+    }
     
     return artists;
 }

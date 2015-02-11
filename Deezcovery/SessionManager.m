@@ -284,26 +284,9 @@ static SessionManager *sharedInstance = nil;
     NSURL *url2 = [NSURL URLWithString:webUrl];
     NSData *data = [NSData dataWithContentsOfURL:url2];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"ret=%@", ret);
+    //NSLog(@"ret=%@", ret);
     
-    /*
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setHTTPMethod:@"GET"];
-    [request setURL:[NSURL URLWithString:completeURL]];
-    
-    NSError *error = [[NSError alloc] init];
-    NSHTTPURLResponse *responseCode = nil;
-    
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-    
-    if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %i", completeURL, [responseCode statusCode]);
-        return nil;
-    }
-    
-    return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
-     */
-    return nil;
+    return ret;
 }
 
 @end

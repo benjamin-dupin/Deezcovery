@@ -14,6 +14,7 @@
     if (self){
         self.name = nil;
         self.picture = nil;
+        self._id = nil;
     }
     
     return self;
