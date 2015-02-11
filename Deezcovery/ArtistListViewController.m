@@ -91,13 +91,13 @@
 
 
 #pragma mark - Navigation
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ARTIST_SEGUE_ID"]){
         AlbumListViewController *controller = segue.destinationViewController;
         controller.artist = self.selectedArtist;
     }
+    // Testing something to show
 }
 
 #pragma mark - UITableView Delegate
