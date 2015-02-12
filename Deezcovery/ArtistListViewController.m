@@ -16,16 +16,12 @@
 
 @interface ArtistListViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favButton;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchButton;
 @property (weak, nonatomic) IBOutlet UITextField *searchTxtField;
-
 @property (weak, nonatomic) IBOutlet UITableView *artists;
 @property (weak, nonatomic) ArtistService *artistService;
-@property (strong, nonatomic) NSMutableArray *relatedArtists;
 @property (weak, nonatomic) Artist *selectedArtist;
-
-
+@property (strong, nonatomic) NSMutableArray *relatedArtists;
 @end
 
 @implementation ArtistListViewController

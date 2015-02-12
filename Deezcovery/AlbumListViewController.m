@@ -7,10 +7,13 @@
 //
 
 #import "AlbumListViewController.h"
-
 #import "AlbumService.h"
 #import "Album.h"
 #import "Artist.h"
+#import "TrackListViewController.h"
+
+#define CELL_ID @"ALBUM_CELL_ID"
+#define SEGUE_ID @"ALBUM_SEGUE_ID"
 
 @interface AlbumListViewController ()
 
@@ -50,8 +53,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.albums reloadData];
-    
-    [self loadAlbums];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -64,7 +65,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [self.albums dequeueReusableCellWithIdentifier:@"ALBUM_CELL_ID"];
+    UITableViewCell *cell = [self.albums dequeueReusableCellWithIdentifier:CELL_ID];
     
     Album *album = self.artistAlbums[indexPath.row];
     cell.textLabel.text = album.title;
@@ -85,6 +86,16 @@
         self.artistAlbums = [self.albumService getAlbumsByArtist:self.artist];
         
         [self.albums reloadData];
+        
+        if ([self.artistAlbums count] == 0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No album"
+                                                            message:@"There is no album for this artist."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK :-("
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        
         
     }
     
@@ -112,6 +123,20 @@
                                           otherButtonTitles:nil];
     [alert show];
     
+}
+
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:SEGUE_ID]){
+        TrackListViewController *controller = segue.destinationViewController;
+        controller.album = self.selectedAlbum;
+    }
+}
+
+#pragma mark - UITableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    self.selectedAlbum = self.artistAlbums[indexPath.row];
+    [self performSegueWithIdentifier:SEGUE_ID sender:self];
 }
 
 @end

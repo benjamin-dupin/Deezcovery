@@ -140,9 +140,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="g1z-Op-1Bs" kind="push" id="On1-vm-FQd"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -166,25 +163,21 @@
                     <connections>
                         <outlet property="albums" destination="YH1-lm-5nE" id="4im-SB-Dx3"/>
                         <outlet property="titleNavigationBar" destination="8iX-Tg-KDJ" id="tA3-rq-3sx"/>
+                        <segue destination="g1z-Op-1Bs" kind="push" identifier="ALBUM_SEGUE_ID" id="0FG-ss-UGN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="INa-AW-dDN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="134" y="23"/>
         </scene>
-        <!--Titre View Controller-->
+        <!--Track View Controller-->
         <scene sceneID="z17-Po-V7N">
             <objects>
-                <viewController id="g1z-Op-1Bs" userLabel="Titre View Controller" sceneMemberID="viewController">
+                <viewController id="g1z-Op-1Bs" userLabel="Track View Controller" customClass="TrackListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SdK-Ns-5r4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="GsX-Pu-RPj">
-                                <rect key="frame" x="0.0" y="62" width="320" height="506"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <navigationBar contentMode="scaleToFill" id="lpa-Gn-1jF">
                                 <rect key="frame" x="0.0" y="18" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -192,10 +185,38 @@
                                     <navigationItem title="Title" id="iNg-gG-fyP"/>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="36" sectionHeaderHeight="22" sectionFooterHeight="22" id="GsX-Pu-RPj">
+                                <rect key="frame" x="0.0" y="62" width="320" height="506"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TRACK_CELL_ID" textLabel="rhV-2y-N1F" imageView="ZlS-kF-aTH" rowHeight="36" style="IBUITableViewCellStyleDefault" id="yHV-qg-vRi">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yHV-qg-vRi" id="6YU-9q-gSa">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rhV-2y-N1F">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Play" id="ZlS-kF-aTH">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="cdo-PY-FEA"/>
+                    <connections>
+                        <outlet property="tracks" destination="GsX-Pu-RPj" id="wVE-3y-VLW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdR-Ij-GPL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem systemItem="add" id="JAu-bR-U80"/>
@@ -212,6 +233,7 @@
     <resources>
         <image name="Fav" width="120" height="120"/>
         <image name="Glass" width="120" height="120"/>
+        <image name="Play" width="120" height="120"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

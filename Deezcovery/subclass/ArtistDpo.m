@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 B'n'J. All rights reserved.
 //
 
-#import "ARTIST.h"
+#import "ArtistDpo.h"
 
 
-@implementation ARTIST
+@implementation ArtistDpo
 
 @dynamic id;
 
