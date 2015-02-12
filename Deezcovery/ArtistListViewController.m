@@ -11,6 +11,9 @@
 #import "ArtistService.h"
 #import "Artist.h"
 
+#define CELL_ID @"ARTIST_CELL_ID"
+#define SEGUE_ID @"ARTIST_SEGUE_ID"
+
 @interface ArtistListViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchButton;
@@ -50,20 +53,29 @@
     [self.artists reloadData];
 }
 
-/**
- Click on Search Button
- */
+#pragma mark - Click on "Search" button
 - (IBAction)didTouchSearchButton:(id)sender {
     
-    NSLog(@"Search");
+    @try {
+        
+        if ([self.searchTxtField.text length ] > 0) {
+            
+            self.relatedArtists = [[NSMutableArray alloc]init];
+            
+            self.relatedArtists = [self.artistService getRelatedArtists:self.searchTxtField.text];
+            
+            [self.artists reloadData];
+        }
+        
+    }
     
-    if ([self.searchTxtField.text length ] > 0) {
-        
-        self.relatedArtists = [[NSMutableArray alloc]init];
-        
-        self.relatedArtists = [self.artistService getRelatedArtists:self.searchTxtField.text];
-        
-        [self.artists reloadData];
+    @catch(NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Can not find the artist..."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK :-("
+                                              otherButtonTitles:nil];
+        [alert show];
     }
 }
 
@@ -77,33 +89,39 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [self.artists dequeueReusableCellWithIdentifier:@"ARTIST_CELL_ID"];
+    UITableViewCell *cell = [self.artists dequeueReusableCellWithIdentifier:CELL_ID];
     
     Artist *artist = self.relatedArtists[indexPath.row];
     cell.textLabel.text = artist.name;
     
-    NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
+    // FIXME : Voir avec le prof
+    // Bug dans le chargement
+    // Chargement async des images
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_async(queue, ^{
+        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
+        cell.imageView.image = [UIImage imageWithData:dataPicture];
+    });
     
-    cell.imageView.image = [UIImage imageWithData:dataPicture];
+    //NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
+    //cell.imageView.image = [UIImage imageWithData:dataPicture];
     
     return cell;
 }
 
 
 #pragma mark - Navigation
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ARTIST_SEGUE_ID"]){
+    if ([segue.identifier isEqualToString:SEGUE_ID]){
         AlbumListViewController *controller = segue.destinationViewController;
         controller.artist = self.selectedArtist;
     }
-    // Testing something to show
 }
 
 #pragma mark - UITableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.selectedArtist = self.relatedArtists[indexPath.row];
-    [self performSegueWithIdentifier:@"ARTIST_SEGUE_ID" sender:self];
+    [self performSegueWithIdentifier:SEGUE_ID sender:self];
 }
 
 @end

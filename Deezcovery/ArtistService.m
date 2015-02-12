@@ -36,49 +36,44 @@ static ArtistService *sharedInstance = nil;
 }
 
 
-/**
-    Search related artist from artist name
- */
+#pragma mark - Recherches artistes
 - (NSMutableArray *) getRelatedArtists:(NSString *)artistName{
     
-    // ==========================
-    // Search artist by name
-    // ==========================
-    
-    // Search artist URL
-    NSString *searchArtistUrl = [NSString stringWithFormat:@"%@%@", @"/search/artist?q=", artistName];
-    
-    // Get JSON string from request
-    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchArtistUrl];
-    
-    // Convert String to Dictionnary
-    NSData *webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
-    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
-    NSLog(@"JSON DIct: %@", jsonDict);
+    /*
+     Cette méthode cherche un artiste à partir d'un string
+     puis cherche les artistes correspondant au premier artiste trouvé
+     */
     
     // Artists Array
     NSMutableArray *artists = [@[] mutableCopy];
     
+    // ======================
+    // Recherche de l'artiste
+    // ======================
+    
+    NSString *searchArtistUrl = [NSString stringWithFormat:@"%@%@", @"/search/artist?q=", artistName];
+    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchArtistUrl];
+    // Convertir String JSON en Dictionnary
+    NSData *webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+    
+    // On récupère le premier artiste et on le met dans l'array
     NSDictionary *firstArtistFromSearch = [[jsonDict objectForKey:@"data"] objectAtIndex:0];
     Artist *firstArtist = [Artist artistFromJSON:firstArtistFromSearch];
     [artists addObject:firstArtist];
     
     // ==========================
-    // Search related artists
+    // Recherche artiste "related"
     // ==========================
     
-    // Related artists URL
     NSString *searchRelatedArtistsUrl = [NSString stringWithFormat:@"%@%@%@", @"/artist/", firstArtist._id, @"/related"];
-    
-    // Get JSON
     jsonString = [[SessionManager sharedInstance] getDataFrom:searchRelatedArtistsUrl];
-    
-    // Convert to dictionary
+    // Convertir String JSON en Dictionnary
     webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
-    NSLog(@"JSON DIct: %@", jsonDict);
     
+    // Pour chaque objet du Dico, on crée un Artist ou on le put dans l'array
     for (NSDictionary *object in [jsonDict objectForKey:@"data"]) {
         Artist *artist = [Artist artistFromJSON:object];
         [artists addObject:artist];

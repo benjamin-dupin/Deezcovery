@@ -17,12 +17,20 @@
     
     Artist *artist = [[Artist alloc] init];
     
+    // Pour chaque clef du NSDico
     for (id key in JSON){
-        NSLog(@"key: %@", key);
         
+        // Si la clef correspond à un attribut du model
         if([artist respondsToSelector:NSSelectorFromString(key)]){
+            
+            // Attribut = valeur de la clef
             [artist setValue:JSON[key] forKey:key];
-        } else if ([key isEqualToString:@"id"]) {
+        }
+        
+        // Sinon, si la clef vaut id
+        else if ([key isEqualToString:@"id"]) {
+            
+            // Attribut _id = valeur de la clef id
             artist._id = JSON[key];
         }
     }
