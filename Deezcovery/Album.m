@@ -21,6 +21,7 @@
         self.explicit_lyrics = NO;
         self.type = @"type";
         self.artist = nil;
+        self._id = @"id";
     }
     
     return self;

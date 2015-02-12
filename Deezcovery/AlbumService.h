@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "Album.h"
+#import "Artist.h"
 
 @interface AlbumService : NSObject
 #pragma mark - Singleton Pattern -
 + (instancetype)sharedInstance;
 
-- (void)getAlbumsWithcompletion:(void (^)(NSArray *))completion;
+- (NSMutableArray *)getAlbumsByArtist:(Artist *)artist;
 
 @end

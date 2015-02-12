@@ -38,6 +38,8 @@
     [self setupModel];
     [self configureOutlets];
     
+    [self setTitle:self.artist.name];
+    
     [self loadAlbums];
 }
 
@@ -67,24 +69,49 @@
     Album *album = self.artistAlbums[indexPath.row];
     cell.textLabel.text = album.title;
     
-    NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
-    cell.imageView.image = [UIImage imageWithData:dataPicture];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    dispatch_async(queue, ^{
+        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
+        cell.imageView.image = [UIImage imageWithData:dataPicture];
+    });
     
     return cell;
 }
 
 - (void) loadAlbums {
-    self.titleNavigationBar.topItem.title = @"test";
     
-    self.artistAlbums = [@[] mutableCopy];
+    @try {
+        
+        self.artistAlbums = [self.albumService getAlbumsByArtist:self.artist];
+        
+        [self.albums reloadData];
+        
+    }
     
-    Album *album = [[Album alloc]init];
-    album.title = self.artist.name;
+    @catch(NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Can not find the albums..."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK :-("
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
     
-    [self.artistAlbums addObject:album];
-    
-    [self.albums reloadData];
 }
 
+- (IBAction)didTouchOnAddToFavButton:(id)sender {
+    
+    /*
+     TODO
+     */
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TODO"
+                                                    message:@"Gérer les favoris"
+                                                   delegate:self
+                                          cancelButtonTitle:@"..."
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+}
 
 @end

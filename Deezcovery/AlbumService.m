@@ -9,6 +9,7 @@
 #import "AlbumService.h"
 #import "SessionManager.h"
 #import "Album+JSONSerliazer.h"
+#import "Album.h"
 
 @implementation AlbumService
 static AlbumService *sharedInstance = nil;
@@ -34,16 +35,24 @@ static AlbumService *sharedInstance = nil;
     return self;
 }
 
-- (void)getAlbumsWithcompletion:(void (^)(NSArray *))completion{
-    [[SessionManager sharedInstance] LIST:@"artist/27/albums" completion:^(NSArray * JSON) {
-        NSMutableArray *albums = [@[] mutableCopy];
-        for (NSDictionary *object in JSON){
-            Album *album = [Album albumFromJSON:object];
-            [albums addObject:album];
-        }
-        
-        if (completion) completion(albums);
-    }];
+- (NSMutableArray *)getAlbumsByArtist:(Artist *)artist {
+    
+    // Albums Array
+    NSMutableArray *albums = [@[] mutableCopy];
+    
+    NSString *searchAlbumsUrl = [NSString stringWithFormat:@"%@%@%@", @"/artist/", artist._id, @"/albums"];
+    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchAlbumsUrl];
+    // Convertir String JSON en Dictionnary
+    NSData *webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+    
+    for (NSDictionary *object in [jsonDict objectForKey:@"data"]) {
+        Album *album = [Album albumFromJSON:object];
+        [albums addObject:album];
+    }
+    
+    return albums;
 }
 
 @end

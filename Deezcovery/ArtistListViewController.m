@@ -86,9 +86,9 @@
      */
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TODO"
-                                                    message:@"TODO"
+                                                    message:@"Gérer les favoris"
                                                    delegate:self
-                                          cancelButtonTitle:@"TODO"
+                                          cancelButtonTitle:@"..."
                                           otherButtonTitles:nil];
     [alert show];
     
