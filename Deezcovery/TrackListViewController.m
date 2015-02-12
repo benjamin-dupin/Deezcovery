@@ -105,9 +105,13 @@
     
     NSURL *url = [NSURL URLWithString:[selectedTrack.preview stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
-    AVPlayer *player = [[AVPlayer alloc] initWithURL:url];
+    self.player = [[AVPlayer alloc] initWithURL:url];
     
-    [player play];
+    if (!self.player) {
+        NSLog(@"Error");
+    }
+    
+    [self.player play];
 }
 
 @end

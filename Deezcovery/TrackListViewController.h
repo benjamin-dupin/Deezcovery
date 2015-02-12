@@ -12,5 +12,6 @@
 @interface TrackListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) Album *album;
+@property (strong, nonatomic) AVPlayer *player;
 
 @end
