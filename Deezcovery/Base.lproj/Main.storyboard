@@ -40,8 +40,23 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="IwU-SY-TCc">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="BvO-um-64t">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Jb8-1x-f3m">
+                                <rect key="frame" x="16" y="-3" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Fav">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTouchFavButton:" destination="Ez0-sq-ySg" eventType="touchUpInside" id="m6d-pJ-H4H"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="didTouchFavButton:" destination="Ez0-sq-ySg" id="ycG-R1-uxC"/>
+                            </connections>
+                        </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="kfa-g3-fs1">
-                            <rect key="frame" x="8" y="7" width="219" height="30"/>
+                            <rect key="frame" x="52" y="7" width="175" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
@@ -65,6 +80,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="artists" destination="sGo-fD-yhN" id="eJj-gr-EUk"/>
+                        <outlet property="favButton" destination="BvO-um-64t" id="4zX-Vm-Wpb"/>
                         <outlet property="searchButton" destination="J6o-zi-5t3" id="Q5H-48-Pal"/>
                         <outlet property="searchTxtField" destination="kfa-g3-fs1" id="5Tx-2l-alR"/>
                         <segue destination="0Q6-ZJ-MBC" kind="push" identifier="ARTIST_SEGUE_ID" id="vEt-9y-jZi"/>
@@ -180,6 +196,9 @@
             <point key="canvasLocation" x="516" y="23"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Fav" width="120" height="120"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

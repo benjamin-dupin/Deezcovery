@@ -15,6 +15,7 @@
 #define SEGUE_ID @"ARTIST_SEGUE_ID"
 
 @interface ArtistListViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *favButton;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchButton;
 @property (weak, nonatomic) IBOutlet UITextField *searchTxtField;
@@ -77,6 +78,20 @@
                                               otherButtonTitles:nil];
         [alert show];
     }
+}
+- (IBAction)didTouchFavButton:(id)sender {
+    
+    /*
+     TODO
+     */
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TODO"
+                                                    message:@"TODO"
+                                                   delegate:self
+                                          cancelButtonTitle:@"TODO"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
