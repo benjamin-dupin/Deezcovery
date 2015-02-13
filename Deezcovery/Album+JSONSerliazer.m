@@ -15,12 +15,21 @@
         return nil;
     
     Album *album = [[Album alloc] init];
+    
     for (id key in JSON){
-        NSLog(@"key: %@", key);
+        
         if([album respondsToSelector:NSSelectorFromString(key)]){
-            NSLog(@"respond to selector!");
+            
             [album setValue:JSON[key] forKey:key];
         }
+        
+        // Sinon, si la clef vaut id
+        else if ([key isEqualToString:@"id"]) {
+            
+            // Attribut _id = valeur de la clef id
+            album._id = JSON[key];
+        }
+        
     }
     return album;
 }
@@ -53,7 +62,7 @@
         else
             self.explicit_lyrics = NO;
     }
-        
+    
     
     
     return json;

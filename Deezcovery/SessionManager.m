@@ -276,15 +276,17 @@ static SessionManager *sharedInstance = nil;
     }];
 }
 
+/**
+ GET DATA FROM STRING
+ **/
 - (NSString *) getDataFrom:(NSString *)url{
+    
+    // URL Complete : API_BASE_URL + url
     NSString *completeURL = [NSString stringWithFormat:@"%@%@", API_BASE_URL, url];
-    
     NSString *webUrl = [completeURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSURL *url2 = [NSURL URLWithString:webUrl];
-    NSData *data = [NSData dataWithContentsOfURL:url2];
+    NSURL *nsUrl = [NSURL URLWithString:webUrl];
+    NSData *data = [NSData dataWithContentsOfURL:nsUrl];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //NSLog(@"ret=%@", ret);
     
     return ret;
 }

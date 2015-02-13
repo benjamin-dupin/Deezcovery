@@ -19,4 +19,6 @@
 @property (strong, nonatomic) NSString *tracklist;
 @property (assign, nonatomic) BOOL explicit_lyrics;
 @property (assign, nonatomic) NSString *type;
+@property (assign, nonatomic) NSString *_id;
+
 @end

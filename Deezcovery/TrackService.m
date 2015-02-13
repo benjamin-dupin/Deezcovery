@@ -1,18 +1,19 @@
 //
-//  TodoManager.m
-//  TodoList
+//  TrackService.m
+//  Deezcovery
 //
-//  Created by Julien Sarazin on 19/12/14.
-//  Copyright (c) 2014 Julien Sarazin. All rights reserved.
+//  Created by B'n'J on 12/02/2015.
+//  Copyright (c) 2015 B'n'J. All rights reserved.
 //
 
-#import "AlbumService.h"
+#import "TrackService.h"
+#import "Track.h"
 #import "SessionManager.h"
-#import "Album+JSONSerliazer.h"
-#import "Album.h"
+#import "Track+JSONSerializer.h"
 
-@implementation AlbumService
-static AlbumService *sharedInstance = nil;
+@implementation TrackService
+
+static TrackService *sharedInstance = nil;
 
 #pragma mark - Singleton Pattern -
 + (instancetype)sharedInstance{
@@ -35,24 +36,24 @@ static AlbumService *sharedInstance = nil;
     return self;
 }
 
-- (NSMutableArray *)getAlbumsByArtist:(Artist *)artist {
+- (NSMutableArray *) getTracksByAlbum:(Album *)album {
     
-    // Albums Array
-    NSMutableArray *albums = [@[] mutableCopy];
+    NSMutableArray *tracks = [@[] mutableCopy];
     
-    NSString *searchAlbumsUrl = [NSString stringWithFormat:@"%@%@%@", @"/artist/", artist._id, @"/albums"];
-    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchAlbumsUrl];
+    NSString *searchTracksUrl = [NSString stringWithFormat:@"%@%@%@", @"/album/", album._id, @"/tracks"];
+    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchTracksUrl];
     // Convertir String JSON en Dictionnary
     NSData *webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error;
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
     
     for (NSDictionary *object in [jsonDict objectForKey:@"data"]) {
-        Album *album = [Album albumFromJSON:object];
-        [albums addObject:album];
+        Track *track = [Track trackFromJSON:object];
+        [tracks addObject:track];
     }
     
-    return albums;
+    return tracks;
 }
+
 
 @end

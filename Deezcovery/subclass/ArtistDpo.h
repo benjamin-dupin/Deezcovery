@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface ARTIST : NSManagedObject
+@interface ArtistDpo : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * id;
 
