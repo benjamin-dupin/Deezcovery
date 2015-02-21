@@ -67,14 +67,41 @@
     
     UITableViewCell *cell = [self.albums dequeueReusableCellWithIdentifier:CELL_ID];
     
-    Album *album = self.artistAlbums[indexPath.row];
-    cell.textLabel.text = album.title;
+//    Album *album = self.artistAlbums[indexPath.row];
+//    cell.textLabel.text = album.title;
+//    
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+//    dispatch_async(queue, ^{
+//        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
+//        cell.imageView.image = [UIImage imageWithData:dataPicture];
+//    });
     
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    dispatch_async(queue, ^{
-        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
-        cell.imageView.image = [UIImage imageWithData:dataPicture];
-    });
+    // load cell artist
+    
+    Album *album = self.artistAlbums[indexPath.row];
+    UIImage *image= album.UIcover;
+    
+    //if image is already saved
+    if(image){
+        cell.textLabel.text = album.title;
+        cell.imageView.image = image;
+    }else{
+        //else it will be downloaded
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        dispatch_async(queue, ^{
+            
+            //downloaded image
+            NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
+            album.UIcover = [UIImage imageWithData:data];
+            
+            //put image in cells in an asynchronous way
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.textLabel.text = album.title;
+                cell.imageView.image = album.UIcover ;
+            });
+        });
+    }
+    
     
     return cell;
 }
