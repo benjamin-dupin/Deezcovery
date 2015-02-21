@@ -32,6 +32,7 @@
 - (void)configureOutlets{
     self.artists.delegate = self;
     self.artists.dataSource = self;
+
 }
 
 - (void)viewDidLoad {
@@ -134,27 +135,41 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    // Chargement des données des cells
+    // load cell artist
     
     UITableViewCell *cell = [self.artists dequeueReusableCellWithIdentifier:CELL_ID];
     
     Artist *artist = self.relatedArtists[indexPath.row];
-    cell.textLabel.text = artist.name;
-
-    // Chargement async des images
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    dispatch_async(queue, ^{
-        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
-        cell.imageView.image = [UIImage imageWithData:dataPicture];
-    });
+    UIImage *image= artist.UIpicture;
+    
+    //if image is already saved
+    if(image){
+        cell.textLabel.text = artist.name;
+        cell.imageView.image = image;
+    }else{
+        //else it will be downloaded
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        dispatch_async(queue, ^{
+            
+            //downloaded image
+            NSData *data = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
+            artist.UIpicture = [UIImage imageWithData:data];
+            
+            //put image in cells in an asynchronous way
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.textLabel.text = artist.name;
+                cell.imageView.image = artist.UIpicture ;
+            });
+        });
+    }
     
     // Chargement sync des images
     //NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
     //cell.imageView.image = [UIImage imageWithData:dataPicture];
     
+
     return cell;
 }
-
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
