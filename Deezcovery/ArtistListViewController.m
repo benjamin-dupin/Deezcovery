@@ -10,6 +10,7 @@
 #import "ArtistListViewController.h"
 #import "ArtistService.h"
 #import "Artist.h"
+#import "DBManager.h"
 
 #define CELL_ID @"ARTIST_CELL_ID"
 #define SEGUE_ID @"ARTIST_SEGUE_ID"
@@ -76,6 +77,10 @@
     }
 }
 - (IBAction)didTouchFavButton:(id)sender {
+    
+    DBManager *db = [DBManager sharedInstance];
+    
+    NSLog(@"%d",[[db fetchArtists] count]);
     
     /*
      TODO

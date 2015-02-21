@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 B'n'J. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 #import "Album.h"
 
