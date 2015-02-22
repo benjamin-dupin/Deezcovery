@@ -1,11 +1,11 @@
 //
-//  ViewController.m
-//  TodoList
-//
-//  Created by Julien Sarazin on 16/11/14.
-//  Copyright (c) 2014 Julien Sarazin. All rights reserved.
+//  AlbumListViewController.m
+//  Deezcovery
 //
 
+#import "ArtistService.h"
+#import "ArtistDpo.h"
+#import "DBManager.h"
 #import "AlbumListViewController.h"
 #import "AlbumService.h"
 #import "Album.h"
@@ -91,7 +91,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No album"
                                                             message:@"There is no album for this artist."
                                                            delegate:self
-                                                  cancelButtonTitle:@"OK :-("
+                                                  cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -101,9 +101,9 @@
     
     @catch(NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                        message:@"Can not find the albums..."
+                                                        message:@"Can not find the albums."
                                                        delegate:self
-                                              cancelButtonTitle:@"OK :-("
+                                              cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
     }
@@ -112,16 +112,69 @@
 
 - (IBAction)didTouchOnAddToFavButton:(id)sender {
     
-    /*
-     TODO
-     */
+    @try {
+        
+        NSNumber *artistId = [NSNumber numberWithInteger:[self.artist._id integerValue]];
+        
+        DBManager * db = [DBManager sharedInstance];
+        
+        // Si l'artiste n'est pas déjà en fav
+        if ([db getArtistById:artistId] == nil) {
+            ArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([ArtistDpo class])];
+            fav.id_deezer = artistId;
+            NSNumber * tst = fav.id_deezer;
+            NSLog(@"Artist ID : %d", (int) [self.artist._id integerValue]);
+            NSLog(@"Artist String : %@", self.artist._id);
+            NSLog(@"DPO ID : %d", [fav.id_deezer intValue]);
+            NSLog(@"Test : %d", [artistId intValue]);
+            [db persistData];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                            message:@"Artist added to favorites."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                            message:@"This artist is already in your favorites. Do you want to want to delete it ?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"Delete", nil];
+            [alert show];
+        }
+        
+    }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TODO"
-                                                    message:@"Gérer les favoris"
-                                                   delegate:self
-                                          cancelButtonTitle:@"..."
-                                          otherButtonTitles:nil];
-    [alert show];
+    @catch(NSException *exception) {
+        
+        //Gestion des exceptions
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Impossible to add to favorites."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    // Méthode appelée quand on clique sur le bouton d'une UIAlertView
+    
+    if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Delete"]) {
+        DBManager * db = [DBManager sharedInstance];
+        ArtistDpo * artist = [db getArtistById:[NSNumber numberWithInteger:[self.artist._id integerValue]]];
+        [db deleteManagedObject:artist];
+        [db persistData];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                        message:@"Artist removed from favorites"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
     
 }
 

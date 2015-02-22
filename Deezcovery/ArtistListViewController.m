@@ -2,15 +2,13 @@
 //  ArtistListViewController.m
 //  Deezcovery
 //
-//  Created by B'n'J on 20/01/2015.
-//  Copyright (c) 2015 B'n'J. All rights reserved.
-//
 
 #import "AlbumListViewController.h"
 #import "ArtistListViewController.h"
 #import "ArtistService.h"
 #import "Artist.h"
 #import "DBManager.h"
+#import "ArtistDpo.h"
 
 #define CELL_ID @"ARTIST_CELL_ID"
 #define SEGUE_ID @"ARTIST_SEGUE_ID"
@@ -54,9 +52,13 @@
 #pragma mark - Click on "Search" button
 - (IBAction)didTouchSearchButton:(id)sender {
     
+    // Méthode appelée quand on clique sur le boutton de la loupe
+    
     @try {
         
         if ([self.searchTxtField.text length ] > 0) {
+            
+            // Si le text field est renseigné
             
             self.relatedArtists = [[NSMutableArray alloc]init];
             
@@ -68,30 +70,57 @@
     }
     
     @catch(NSException *exception) {
+        
+        //Gestion des exceptions
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                        message:@"Can not find the artist..."
+                                                        message:@"Impossible to find this artist."
                                                        delegate:self
-                                              cancelButtonTitle:@"OK :-("
+                                              cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
     }
 }
 - (IBAction)didTouchFavButton:(id)sender {
     
-    DBManager *db = [DBManager sharedInstance];
+    // Click sur l'étoile pour voir les favoris
     
-    NSLog(@"%d",[[db fetchArtists] count]);
+    @try {
+        
+        DBManager *db = [DBManager sharedInstance];
+        
+        // Récupérer les favoris
+        NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([ArtistDpo class])];
+        
+        if ([favoriteArtists count] == 0) {
+            // Si aucun favoris
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No favorite"
+                                                            message:@"You do not have any favorites"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            
+            [alert show];
+        } else {
+            // Sinon, convertion ArtistDpo -> Artist
+            self.relatedArtists = [[NSMutableArray alloc]init];
+            self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
+            [self.artists reloadData];
+        }
+        
+    }
     
-    /*
-     TODO
-     */
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TODO"
-                                                    message:@"Gérer les favoris"
-                                                   delegate:self
-                                          cancelButtonTitle:@"..."
-                                          otherButtonTitles:nil];
-    [alert show];
+    @catch(NSException *exception) {
+        
+        //Gestion des exceptions
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Impossible to load favorites."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
     
 }
 
@@ -105,13 +134,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    // Chargement des données des cells
+    
     UITableViewCell *cell = [self.artists dequeueReusableCellWithIdentifier:CELL_ID];
     
     Artist *artist = self.relatedArtists[indexPath.row];
     cell.textLabel.text = artist.name;
-    
-    // FIXME : Voir avec le prof
-    // Bug dans le chargement
+
     // Chargement async des images
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(queue, ^{
@@ -119,6 +148,7 @@
         cell.imageView.image = [UIImage imageWithData:dataPicture];
     });
     
+    // Chargement sync des images
     //NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
     //cell.imageView.image = [UIImage imageWithData:dataPicture];
     

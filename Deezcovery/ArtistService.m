@@ -2,10 +2,8 @@
 //  ArtistService.m
 //  Deezcovery
 //
-//  Created by B'n'J on 20/01/2015.
-//  Copyright (c) 2015 B'n'J. All rights reserved.
-//
 
+#import "ArtistDpo.h"
 #import "ArtistService.h"
 #import "SessionManager.h"
 #import "Artist+JSONSerializer.h"
@@ -80,6 +78,29 @@ static ArtistService *sharedInstance = nil;
     }
     
     return artists;
+}
+
+- (NSMutableArray *) getArtistsByArtistDpoArray:(NSArray *)artistDpoArray {
+    
+    NSMutableArray *artists = [@[] mutableCopy];
+    
+    for (ArtistDpo* artistDpo in artistDpoArray) {
+        [artists addObject:[self getArtistById:artistDpo.id_deezer]];
+    }
+    
+    return artists;
+}
+
+- (Artist *) getArtistById:(NSNumber *)artistId {
+    
+    NSString *searchArtistUrl = [NSString stringWithFormat:@"%@%@", @"/artist/", artistId];
+    NSString* jsonString = [[SessionManager sharedInstance] getDataFrom:searchArtistUrl];
+    // Convertir String JSON en Dictionnary
+    NSData *webData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:webData options:0 error:&error];
+    
+    return [Artist artistFromJSON:jsonDict];
 }
 
 @end

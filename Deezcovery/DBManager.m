@@ -1,15 +1,16 @@
 //
 //  ScripteDB.m
-//  SimpleScripte
 //
 //  Created by Julien Sarazin on 17/04/13.
 //  Copyright (c) 2013 simpleApp. All rights reserved.
 //
 
 #import "DBManager.h"
+#import "ArtistDpo.h"
 
 #define Persistance_Directory   @"Persistence"
 #define SQlite_DB_Filename      @"ARTISTDPO.sqlite"
+#define ARTISTDPO      @"ArtistDpo"
 
 @interface DBManager ()
 
@@ -189,6 +190,27 @@ static DBManager *sharedInstance = nil;
 
 #pragma mark - domain related features -
 - (NSArray *)fetchArtists{
-    return [self fetchEntity:@"ArtistDpo" predicate:nil prefetchedRelations:nil sortKey:nil ascending:YES error:nil];
+    return [self fetchEntity:ARTISTDPO predicate:nil prefetchedRelations:nil sortKey:nil ascending:YES error:nil];
+}
+
+- (NSArray *)fetchAllByName:(NSString *)entityName{
+    return [self fetchEntity:entityName predicate:nil prefetchedRelations:nil sortKey:nil ascending:YES error:nil];
+}
+
+- (ArtistDpo *)getArtistById:(NSNumber *)artistId {
+    
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(id_deezer = %@)", artistId];
+    
+    NSArray * fetchedArtist = [self fetchEntity:ARTISTDPO predicate:predicate prefetchedRelations:nil sortKey:nil ascending:YES error:nil];
+    
+    /*
+     TODO : Raise exception quand plusieurs artistes fetched
+    */
+    
+    if ([fetchedArtist count] == 0) {
+        return nil;
+    } else {
+       return [fetchedArtist objectAtIndex:0];
+    }
 }
 @end

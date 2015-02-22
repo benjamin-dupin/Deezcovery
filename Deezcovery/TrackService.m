@@ -2,9 +2,6 @@
 //  TrackService.m
 //  Deezcovery
 //
-//  Created by B'n'J on 12/02/2015.
-//  Copyright (c) 2015 B'n'J. All rights reserved.
-//
 
 #import "TrackService.h"
 #import "Track.h"
@@ -37,6 +34,8 @@ static TrackService *sharedInstance = nil;
 }
 
 - (NSMutableArray *) getTracksByAlbum:(Album *)album {
+    
+    // Récupérer les tracks pour un album
     
     NSMutableArray *tracks = [@[] mutableCopy];
     

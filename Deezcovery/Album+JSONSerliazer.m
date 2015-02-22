@@ -2,9 +2,6 @@
 //  Todo+JSONSerliazer.m
 //  TodoList
 //
-//  Created by Julien Sarazin on 18/01/15.
-//  Copyright (c) 2015 Julien Sarazin. All rights reserved.
-//
 
 #import "Album+JSONSerliazer.h"
 

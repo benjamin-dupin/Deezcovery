@@ -2,9 +2,7 @@
 //  TrackListViewController.m
 //  Deezcovery
 //
-//  Created by B'n'J on 12/02/2015.
-//  Copyright (c) 2015 B'n'J. All rights reserved.
-//
+
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 #import "TrackListViewController.h"
@@ -37,6 +35,7 @@
     [self setupModel];
     [self configureOutlets];
     
+    // Chargement des musiques de l'album à l'apparition de la vue
     [self loadTracks];
 }
 
@@ -71,15 +70,17 @@
     
     @try {
         
+        // Chargement des titres
         self.tracksByAlbum = [self.trackService getTracksByAlbum:self.album];
         
         [self.tracks reloadData];
         
+        // Si aucun titre
         if ([self.tracksByAlbum count] == 0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No track"
                                                             message:@"There is no track for this album."
                                                            delegate:self
-                                                  cancelButtonTitle:@"OK :-("
+                                                  cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -88,10 +89,12 @@
     }
     
     @catch(NSException *exception) {
+        // Gestion des exceptions quand impossible de récupérer les données
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                        message:@"Can not find the tracks..."
+                                                        message:@"Can not find the tracks."
                                                        delegate:self
-                                              cancelButtonTitle:@"OK :-("
+                                              cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
     }
@@ -101,15 +104,13 @@
 #pragma mark - UITableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    // Méthode appelée quand on clique sur une cell (= sur un titre)
+    
     Track *selectedTrack = self.tracksByAlbum[indexPath.row];
     
     NSURL *url = [NSURL URLWithString:[selectedTrack.preview stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     self.player = [[AVPlayer alloc] initWithURL:url];
-    
-    if (!self.player) {
-        NSLog(@"Error");
-    }
     
     [self.player play];
 }
