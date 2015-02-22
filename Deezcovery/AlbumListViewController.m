@@ -122,11 +122,6 @@
         if ([db getArtistById:artistId] == nil) {
             ArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([ArtistDpo class])];
             fav.id_deezer = artistId;
-            NSNumber * tst = fav.id_deezer;
-            NSLog(@"Artist ID : %d", (int) [self.artist._id integerValue]);
-            NSLog(@"Artist String : %@", self.artist._id);
-            NSLog(@"DPO ID : %d", [fav.id_deezer intValue]);
-            NSLog(@"Test : %d", [artistId intValue]);
             [db persistData];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                             message:@"Artist added to favorites."
