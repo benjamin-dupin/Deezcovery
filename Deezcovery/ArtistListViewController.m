@@ -39,6 +39,12 @@
     [super viewDidLoad];
     [self setupModel];
     [self configureOutlets];
+    
+    //DEBUT AJOUT VLE
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handledLongPress:)];
+    //longPressRecognizer.minimumPressDuration = 2.0f;
+    [self.artists addGestureRecognizer:longPressRecognizer];
+    //FIN AJOUT VLE
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,7 +173,6 @@
     //NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
     //cell.imageView.image = [UIImage imageWithData:dataPicture];
     
-
     return cell;
 }
 
@@ -185,4 +190,15 @@
     [self performSegueWithIdentifier:SEGUE_ID sender:self];
 }
 
+
+//DEBUT AJOUT VLE
+- (IBAction)handledLongPress:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                    message:@"This artist is already in your favorites. Do you want to want to delete it ?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Delete", nil];
+    [alert show];
+}
+//FIN AJOUT VLE
 @end
