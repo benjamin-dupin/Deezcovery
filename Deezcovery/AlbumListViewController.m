@@ -263,6 +263,9 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+        
+        UINavigationController *navController = self.navigationController;
+        [navController popViewControllerAnimated:YES];
     }
     
 }
