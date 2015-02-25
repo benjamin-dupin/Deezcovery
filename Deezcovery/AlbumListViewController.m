@@ -46,7 +46,16 @@
     
     [self setTitle:self.artist.name];
     
-    [self loadAlbums];
+    //how you get albums? via web or coredata
+    self.artistAlbums = [self.albumService getAlbumsByArtist:self.artist];
+    [self.albums reloadData];
+    
+    if ([self.artistAlbums count] == 0) {
+        [self loadFavAlbums];
+    }
+    else{
+        [self loadAlbums];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,15 +78,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [self.albums dequeueReusableCellWithIdentifier:CELL_ID];
-    
-    //    Album *album = self.artistAlbums[indexPath.row];
-    //    cell.textLabel.text = album.title;
-    //
-    //    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    //    dispatch_async(queue, ^{
-    //        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
-    //        cell.imageView.image = [UIImage imageWithData:dataPicture];
-    //    });
     
     // load cell artist
     
@@ -140,6 +140,52 @@
     
 }
 
+-(void) loadFavAlbums {
+    @try {
+        
+        DBManager *db = [DBManager sharedInstance];
+        
+        //tool conversion NSString to NSnumber
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        
+        // Récupérer les favoris
+        NSArray * favAlbum = [db getAlbumsByArtist:[f numberFromString:self.artist._id]];
+        
+        if ([favAlbum count] == 0) {
+            // Si aucun favoris
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No favorite"
+                                                            message:@"You do not have any favorites"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            
+            [alert show];
+        } else {
+            // Sinon, convertion ArtistDpo -> Artist
+            self.artistAlbums = [[NSMutableArray alloc]init];
+            
+            self.artistAlbums = [self.albumService getAlbumsByFavAlbumsArray:favAlbum];
+
+            [self.albums reloadData];
+            
+        }
+        
+    }
+    
+    @catch(NSException *exception) {
+        
+        //Gestion des exceptions
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Impossible to load favorites."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 - (IBAction)didTouchOnAddToFavButton:(id)sender {
     
     @try {
@@ -159,14 +205,14 @@
             
             // TODO
             // Pour chaque album de l'artiste
-            //            for (Album *album in self.artistAlbums) {
-            //                // Création du FavAlbumDpo
-            //                FavAlbumDpo * favAlbum = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
-            //                favAlbum.id = [NSNumber numberWithInteger:[album._id integerValue]];
-            //                favAlbum.title = album.title;
-            //                favAlbum.cover = [NSData dataWithContentsOfURL:[NSURL URLWithString:album.cover]];
-            //                favAlbum.artist = favArtist;
-            //            }
+                        for (Album *album in self.artistAlbums) {
+                            // Création du FavAlbumDpo
+                            FavAlbumDpo * favAlbum = [db createManagedObjectWithName:NSStringFromClass([FavAlbumDpo class])];
+                            favAlbum.id = [NSNumber numberWithInteger:[album._id integerValue]];
+                            favAlbum.title = album.title;
+                            favAlbum.cover = [NSData dataWithContentsOfURL:[NSURL URLWithString:album.cover]];
+                            favAlbum.artist = favArtist;
+                        }
             
             //Commit
             [db persistData];

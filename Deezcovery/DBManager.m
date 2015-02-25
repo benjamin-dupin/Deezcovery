@@ -7,6 +7,7 @@
 
 #import "DBManager.h"
 #import "FavArtistDpo.h"
+#import "FavAlbumDpo.h"
 
 #define Persistance_Directory   @"Persistence"
 #define SQlite_DB_Filename      @"Deezcovery.sqlite"
@@ -206,5 +207,15 @@ static DBManager *sharedInstance = nil;
     } else {
         return [fetchedArtist objectAtIndex:0];
     }
+}
+
+- (NSArray *) getAlbumsByArtist:(NSNumber *)artistId {
+    
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(artist.id = %@)", artistId];
+
+    NSArray * fetchedAlbums = [self fetchEntity:@"FavAlbumDpo" predicate:predicate prefetchedRelations:nil sortKey:nil ascending:YES error:nil];
+    
+    return fetchedAlbums;
+
 }
 @end

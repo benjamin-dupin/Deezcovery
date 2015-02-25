@@ -7,6 +7,7 @@
 #import "SessionManager.h"
 #import "Album+JSONSerliazer.h"
 #import "Album.h"
+#import "FavAlbumDpo.h"
 
 @implementation AlbumService
 static AlbumService *sharedInstance = nil;
@@ -50,6 +51,21 @@ static AlbumService *sharedInstance = nil;
     }
     
     return albums;
+}
+
+- (NSMutableArray *)getAlbumsByFavAlbumsArray:(NSArray *)albums{
+    
+    NSMutableArray * result = [[NSMutableArray alloc]init];
+    
+    for (FavAlbumDpo *albumdpo in albums) {
+        Album *album1 = [[Album alloc]init];
+        album1._id = [albumdpo.id stringValue];
+        album1.UIcover = [UIImage imageWithData:albumdpo.cover];
+        album1.title = albumdpo.title;
+        [result addObject:album1];
+    }
+    
+    return result;
 }
 
 @end

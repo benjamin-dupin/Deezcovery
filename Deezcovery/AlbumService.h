@@ -12,5 +12,6 @@
 + (instancetype)sharedInstance;
 
 - (NSMutableArray *)getAlbumsByArtist:(Artist *)artist;
+- (NSMutableArray *)getAlbumsByFavAlbumsArray:(NSArray *)albums;
 
 @end
