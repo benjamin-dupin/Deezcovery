@@ -21,6 +21,7 @@
 @property (weak, nonatomic) ArtistService *artistService;
 @property (weak, nonatomic) Artist *selectedArtist;
 @property (strong, nonatomic) NSMutableArray *relatedArtists;
+@property (assign) BOOL controlFav; //Controle si la liste des favoris est affichée ou non
 @end
 
 @implementation ArtistListViewController
@@ -32,7 +33,7 @@
 - (void)configureOutlets{
     self.artists.delegate = self;
     self.artists.dataSource = self;
-
+    
 }
 
 - (void)viewDidLoad {
@@ -40,11 +41,13 @@
     [self setupModel];
     [self configureOutlets];
     
-    //DEBUT AJOUT VLE
+    //Gestion clic long
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handledLongPress:)];
-    //longPressRecognizer.minimumPressDuration = 2.0f;
+    longPressRecognizer.minimumPressDuration = 1.0f;
     [self.artists addGestureRecognizer:longPressRecognizer];
-    //FIN AJOUT VLE
+    
+    //Initialisation du controle de l'affichage des favoris ou non
+    self.controlFav = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,6 +56,14 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    //Reload la liste des favoris si elle a été modifiée
+    if (self.controlFav == YES) {
+        DBManager * db = [DBManager sharedInstance];
+        NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([ArtistDpo class])];
+        self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
+    }
+    
     [self.artists reloadData];
 }
 
@@ -72,6 +83,8 @@
             self.relatedArtists = [self.artistService getRelatedArtists:self.searchTxtField.text];
             
             [self.artists reloadData];
+            
+            self.controlFav = NO;
         }
         
     }
@@ -113,6 +126,8 @@
             self.relatedArtists = [[NSMutableArray alloc]init];
             self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
             [self.artists reloadData];
+            
+            self.controlFav = YES;
         }
         
     }
@@ -191,14 +206,80 @@
 }
 
 
-//DEBUT AJOUT VLE
+//Clique long pour ajout/suppression de favoris
 - (IBAction)handledLongPress:(id)sender {
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-//                                                    message:@"This artist is already in your favorites. Do you want to want to delete it ?"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"Cancel"
-//                                          otherButtonTitles:@"Delete", nil];
-//    [alert show];
+    
+    UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer*)sender;
+    UIGestureRecognizerState state = longPress.state;
+    if (state == UIGestureRecognizerStateBegan) {
+        
+        //Contrôle qu'on clique sur un item de la TableView
+        CGPoint location = [longPress locationInView:self.artists];
+        NSIndexPath *indexPath = [self.artists indexPathForRowAtPoint:location];
+        if (indexPath) {
+            
+            //On récupère l'artiste
+            self.selectedArtist = self.relatedArtists[indexPath.row];
+            NSNumber *artistId = [NSNumber numberWithInteger:[self.selectedArtist._id integerValue]];
+            DBManager * db = [DBManager sharedInstance];
+            
+            //Si l'artiste n'est pas un favori
+            if ([db getArtistById:artistId] == nil) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                                message:@"This artist is not in your favorites. Do you want to add it ?"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Add", nil];
+                [alert show];
+            }
+            //Si l'artiste est un favori
+            else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                                message:@"This artist is already in your favorites. Do you want to delete it ?"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Delete", nil];
+                [alert show];
+            }
+        }
+    }
 }
-//FIN AJOUT VLE
+
+//Gestion des actions des UIAlertView
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    // Méthode appelée quand on clique sur le bouton d'une UIAlertView
+    DBManager * db = [DBManager sharedInstance];
+    
+    if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Delete"]) {
+        ArtistDpo * artist = [db getArtistById:[NSNumber numberWithInteger:[self.selectedArtist._id integerValue]]];
+        [db deleteManagedObject:artist];
+        [db persistData];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                        message:@"Artist removed from favorites"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        //On met à jour l'affichage de la liste des favoris si on est en train de l'afficher
+        if (self.controlFav == YES) {
+            NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([ArtistDpo class])];
+            self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
+            [self.artists reloadData];
+        }
+    }
+    else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Add"]) {
+        ArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([ArtistDpo class])];
+        NSNumber *artistId = [NSNumber numberWithInteger:[self.selectedArtist._id integerValue]];
+        fav.id_deezer = artistId;
+        [db persistData];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+                                                        message:@"Artist added to favorites."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
 @end
