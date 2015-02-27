@@ -11,6 +11,10 @@
 #import "Album.h"
 #import "Artist.h"
 #import "TrackListViewController.h"
+#import "FavArtistDpo.h"
+#import "FavAlbumDpo.h"
+#import "FavTrackDpo.h"
+#import "TrackService.h"
 
 #define CELL_ID @"ALBUM_CELL_ID"
 #define SEGUE_ID @"ALBUM_SEGUE_ID"
@@ -147,6 +151,24 @@
         
         // Si l'artiste n'est pas déjà en fav
         if ([db getArtistById:artistId] == nil) {
+            
+            // TODO
+//            // Création du FavArtistDpo
+//            FavArtistDpo * favArtist = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
+//            favArtist.id = artistId;
+//            favArtist.name = self.artist.name;
+//            favArtist.picture = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.artist.picture]];
+//            
+//            // Pour chaque album de l'artiste
+//            for (Album *album in self.artistAlbums) {
+//                // Création du FavAlbumDpo
+//                FavAlbumDpo * favAlbum = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
+//                favAlbum.id = [NSNumber numberWithInteger:[album._id integerValue]];
+//                favAlbum.title = album.title;
+//                favAlbum.cover = [NSData dataWithContentsOfURL:[NSURL URLWithString:album.cover]];
+//                favAlbum.artist = favArtist;
+//            }
+            
             ArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([ArtistDpo class])];
             fav.id_deezer = artistId;
             [db persistData];

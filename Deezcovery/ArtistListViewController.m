@@ -193,12 +193,12 @@
 
 //DEBUT AJOUT VLE
 - (IBAction)handledLongPress:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                    message:@"This artist is already in your favorites. Do you want to want to delete it ?"
-                                                   delegate:self
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Delete", nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
+//                                                    message:@"This artist is already in your favorites. Do you want to want to delete it ?"
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"Cancel"
+//                                          otherButtonTitles:@"Delete", nil];
+//    [alert show];
 }
 //FIN AJOUT VLE
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8421DFE41AA06941009E67A6 /* FavArtistDpo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421DFE31AA06941009E67A6 /* FavArtistDpo.m */; };
+		8421DFE71AA06942009E67A6 /* FavAlbumDpo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421DFE61AA06942009E67A6 /* FavAlbumDpo.m */; };
+		8421DFEA1AA06942009E67A6 /* FavTrackDpo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421DFE91AA06942009E67A6 /* FavTrackDpo.m */; };
 		8431D7A61A89E53A00E5A74F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8431D7A41A89E53A00E5A74F /* Main.storyboard */; };
 		843218F01A8BBAF800902381 /* Deezcovery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 843218EE1A8BBAF800902381 /* Deezcovery.xcdatamodeld */; };
 		84974CA41A8CEFB700C0308A /* TrackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84974CA31A8CEFB700C0308A /* TrackListViewController.m */; };
@@ -43,6 +46,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8421DFE21AA06941009E67A6 /* FavArtistDpo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavArtistDpo.h; path = ../FavArtistDpo.h; sourceTree = "<group>"; };
+		8421DFE31AA06941009E67A6 /* FavArtistDpo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavArtistDpo.m; path = ../FavArtistDpo.m; sourceTree = "<group>"; };
+		8421DFE51AA06942009E67A6 /* FavAlbumDpo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavAlbumDpo.h; path = ../FavAlbumDpo.h; sourceTree = "<group>"; };
+		8421DFE61AA06942009E67A6 /* FavAlbumDpo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavAlbumDpo.m; path = ../FavAlbumDpo.m; sourceTree = "<group>"; };
+		8421DFE81AA06942009E67A6 /* FavTrackDpo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavTrackDpo.h; path = ../FavTrackDpo.h; sourceTree = "<group>"; };
+		8421DFE91AA06942009E67A6 /* FavTrackDpo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavTrackDpo.m; path = ../FavTrackDpo.m; sourceTree = "<group>"; };
 		8431D7A51A89E53A00E5A74F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		843218EF1A8BBAF800902381 /* Deezcovery.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Deezcovery.xcdatamodel; sourceTree = "<group>"; };
 		84974CA21A8CEFB700C0308A /* TrackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackListViewController.h; sourceTree = "<group>"; };
@@ -110,6 +119,12 @@
 		843218F11A8BBFC100902381 /* dpo */ = {
 			isa = PBXGroup;
 			children = (
+				8421DFE81AA06942009E67A6 /* FavTrackDpo.h */,
+				8421DFE91AA06942009E67A6 /* FavTrackDpo.m */,
+				8421DFE51AA06942009E67A6 /* FavAlbumDpo.h */,
+				8421DFE61AA06942009E67A6 /* FavAlbumDpo.m */,
+				8421DFE21AA06941009E67A6 /* FavArtistDpo.h */,
+				8421DFE31AA06941009E67A6 /* FavArtistDpo.m */,
 				84E797F91A98DF1F00BB8B50 /* ArtistDpo.h */,
 				84E797FA1A98DF1F00BB8B50 /* ArtistDpo.m */,
 			);
@@ -417,13 +432,16 @@
 				84FEC2701A6E69B80013A252 /* AppDelegate.m in Sources */,
 				84974CAA1A8CF2DC00C0308A /* Track+JSONSerializer.m in Sources */,
 				84FEC2A61A6E72B20013A252 /* AlbumService.m in Sources */,
+				8421DFE71AA06942009E67A6 /* FavAlbumDpo.m in Sources */,
 				84C1DE311A6EDC330036F18C /* Artist.m in Sources */,
+				8421DFE41AA06941009E67A6 /* FavArtistDpo.m in Sources */,
 				84C1DE341A6EDE680036F18C /* Artist+JSONSerializer.m in Sources */,
 				84FEC2951A6E6A460013A252 /* SessionManager.m in Sources */,
 				843218F01A8BBAF800902381 /* Deezcovery.xcdatamodeld in Sources */,
 				84FEC29F1A6E6F110013A252 /* Album.m in Sources */,
 				84974CAE1A8CF4A900C0308A /* TrackService.m in Sources */,
 				84FEC26D1A6E69B80013A252 /* main.m in Sources */,
+				8421DFEA1AA06942009E67A6 /* FavTrackDpo.m in Sources */,
 				84FEC29C1A6E6DBA0013A252 /* Album+JSONSerliazer.m in Sources */,
 				84C1DE291A6EDB420036F18C /* ArtistListViewController.m in Sources */,
 			);

@@ -3,7 +3,27 @@
     <entity name="ArtistDpo" representedClassName="ArtistDpo" syncable="YES">
         <attribute name="id_deezer" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="FavAlbumDpo" representedClassName="FavAlbumDpo" syncable="YES">
+        <attribute name="cover" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavArtistDpo" syncable="YES"/>
+    </entity>
+    <entity name="FavArtistDpo" representedClassName="FavArtistDpo" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="FavTrackDpo" representedClassName="FavTrackDpo" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="track" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavAlbumDpo" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="ArtistDpo" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="ArtistDpo" positionX="-281" positionY="-132" width="128" height="60"/>
+        <element name="FavArtistDpo" positionX="-18" positionY="-63" width="128" height="30"/>
+        <element name="FavAlbumDpo" positionX="-45" positionY="18" width="128" height="30"/>
+        <element name="FavTrackDpo" positionX="-54" positionY="105" width="128" height="30"/>
     </elements>
 </model>
