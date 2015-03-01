@@ -3,7 +3,7 @@
 //  Deezcovery
 //
 
-#import "ArtistDpo.h"
+#import "FavArtistDpo.h"
 #import "ArtistService.h"
 #import "SessionManager.h"
 #import "Artist+JSONSerializer.h"
@@ -80,12 +80,16 @@ static ArtistService *sharedInstance = nil;
     return artists;
 }
 
-- (NSMutableArray *) getArtistsByArtistDpoArray:(NSArray *)artistDpoArray {
+- (NSMutableArray *) getArtistsByFavArtistDpos:(NSArray *)favArtistDpoArray {
     
     NSMutableArray *artists = [@[] mutableCopy];
     
-    for (ArtistDpo* artistDpo in artistDpoArray) {
-        [artists addObject:[self getArtistById:artistDpo.id_deezer]];
+    for (FavArtistDpo * favArtistDpo in favArtistDpoArray) {
+        Artist * artist = [[Artist alloc]init];
+        artist._id = [favArtistDpo.id stringValue];
+        artist.name = favArtistDpo.name;
+        artist.UIpicture = [UIImage imageWithData:favArtistDpo.picture];
+        [artists addObject:artist];
     }
     
     return artists;

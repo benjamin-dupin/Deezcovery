@@ -11,7 +11,7 @@
 
 - (NSMutableArray *) getRelatedArtists:(NSString *) artistName;
 
-- (NSMutableArray *) getArtistsByArtistDpoArray:(NSArray *)artistDpoArray;
+- (NSMutableArray *) getArtistsByFavArtistDpos:(NSArray *)favArtistDpoArray;
 
 - (Artist *) getArtistById:(NSNumber*)artistId;
 @end

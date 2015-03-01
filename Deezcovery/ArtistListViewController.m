@@ -8,7 +8,6 @@
 #import "ArtistService.h"
 #import "Artist.h"
 #import "DBManager.h"
-#import "ArtistDpo.h"
 
 #define CELL_ID @"ARTIST_CELL_ID"
 #define SEGUE_ID @"ARTIST_SEGUE_ID"
@@ -60,8 +59,8 @@
     //Reload la liste des favoris si elle a été modifiée
     if (self.controlFav == YES) {
         DBManager * db = [DBManager sharedInstance];
-        NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([ArtistDpo class])];
-        self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
+        NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([FavArtistDpo class])];
+        self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favoriteArtists];
     }
     
     [self.artists reloadData];
@@ -110,9 +109,9 @@
         DBManager *db = [DBManager sharedInstance];
         
         // Récupérer les favoris
-        NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([ArtistDpo class])];
+        NSArray * favArtists = [db fetchAllByName:NSStringFromClass([FavArtistDpo class])];
         
-        if ([favoriteArtists count] == 0) {
+        if ([favArtists count] == 0) {
             // Si aucun favoris
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No favorite"
                                                             message:@"You do not have any favorites"
@@ -124,7 +123,9 @@
         } else {
             // Sinon, convertion ArtistDpo -> Artist
             self.relatedArtists = [[NSMutableArray alloc]init];
-            self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
+            
+            self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favArtists];
+            //self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
             [self.artists reloadData];
             
             self.controlFav = YES;
@@ -224,7 +225,7 @@
             DBManager * db = [DBManager sharedInstance];
             
             //Si l'artiste n'est pas un favori
-            if ([db getArtistById:artistId] == nil) {
+            if ([db getFavArtistById:artistId] == nil) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                                 message:@"This artist is not in your favorites. Do you want to add it ?"
                                                                delegate:self
@@ -252,8 +253,9 @@
     DBManager * db = [DBManager sharedInstance];
     
     if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Delete"]) {
-        ArtistDpo * artist = [db getArtistById:[NSNumber numberWithInteger:[self.selectedArtist._id integerValue]]];
-        [db deleteManagedObject:artist];
+        //ArtistDpo * artist = [db getArtistById:[NSNumber numberWithInteger:[self.selectedArtist._id integerValue]]];
+        FavArtistDpo * favArtist = [db getFavArtistById:[NSNumber numberWithInteger:[self.selectedArtist._id integerValue]]];
+        [db deleteManagedObject:favArtist];
         [db persistData];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                         message:@"Artist removed from favorites"
@@ -264,15 +266,17 @@
         
         //On met à jour l'affichage de la liste des favoris si on est en train de l'afficher
         if (self.controlFav == YES) {
-            NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([ArtistDpo class])];
-            self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
+            NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([FavArtistDpo class])];
+            self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favoriteArtists];
             [self.artists reloadData];
         }
     }
     else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Add"]) {
-        ArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([ArtistDpo class])];
+        FavArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
         NSNumber *artistId = [NSNumber numberWithInteger:[self.selectedArtist._id integerValue]];
-        fav.id_deezer = artistId;
+        fav.id = artistId;
+        fav.name = self.selectedArtist.name;
+        fav.picture = UIImagePNGRepresentation(self.selectedArtist.UIpicture);
         [db persistData];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                         message:@"Artist added to favorites."

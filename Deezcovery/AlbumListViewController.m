@@ -4,7 +4,6 @@
 //
 
 #import "ArtistService.h"
-#import "ArtistDpo.h"
 #import "DBManager.h"
 #import "AlbumListViewController.h"
 #import "AlbumService.h"
@@ -71,14 +70,14 @@
     
     UITableViewCell *cell = [self.albums dequeueReusableCellWithIdentifier:CELL_ID];
     
-//    Album *album = self.artistAlbums[indexPath.row];
-//    cell.textLabel.text = album.title;
-//    
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-//    dispatch_async(queue, ^{
-//        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
-//        cell.imageView.image = [UIImage imageWithData:dataPicture];
-//    });
+    //    Album *album = self.artistAlbums[indexPath.row];
+    //    cell.textLabel.text = album.title;
+    //
+    //    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    //    dispatch_async(queue, ^{
+    //        NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:album.cover]];
+    //        cell.imageView.image = [UIImage imageWithData:dataPicture];
+    //    });
     
     // load cell artist
     
@@ -150,27 +149,26 @@
         DBManager * db = [DBManager sharedInstance];
         
         // Si l'artiste n'est pas déjà en fav
-        if ([db getArtistById:artistId] == nil) {
+        if ([db getFavArtistById:artistId] == nil) {
+            
+            // Création du FavArtistDpo
+            FavArtistDpo * favArtist = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
+            favArtist.id = artistId;
+            favArtist.name = self.artist.name;
+            favArtist.picture = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.artist.picture]];
             
             // TODO
-//            // Création du FavArtistDpo
-//            FavArtistDpo * favArtist = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
-//            favArtist.id = artistId;
-//            favArtist.name = self.artist.name;
-//            favArtist.picture = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.artist.picture]];
-//            
-//            // Pour chaque album de l'artiste
-//            for (Album *album in self.artistAlbums) {
-//                // Création du FavAlbumDpo
-//                FavAlbumDpo * favAlbum = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
-//                favAlbum.id = [NSNumber numberWithInteger:[album._id integerValue]];
-//                favAlbum.title = album.title;
-//                favAlbum.cover = [NSData dataWithContentsOfURL:[NSURL URLWithString:album.cover]];
-//                favAlbum.artist = favArtist;
-//            }
+            // Pour chaque album de l'artiste
+            //            for (Album *album in self.artistAlbums) {
+            //                // Création du FavAlbumDpo
+            //                FavAlbumDpo * favAlbum = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
+            //                favAlbum.id = [NSNumber numberWithInteger:[album._id integerValue]];
+            //                favAlbum.title = album.title;
+            //                favAlbum.cover = [NSData dataWithContentsOfURL:[NSURL URLWithString:album.cover]];
+            //                favAlbum.artist = favArtist;
+            //            }
             
-            ArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([ArtistDpo class])];
-            fav.id_deezer = artistId;
+            //Commit
             [db persistData];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                             message:@"Artist added to favorites."
@@ -209,9 +207,10 @@
     
     if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Delete"]) {
         DBManager * db = [DBManager sharedInstance];
-        ArtistDpo * artist = [db getArtistById:[NSNumber numberWithInteger:[self.artist._id integerValue]]];
-        [db deleteManagedObject:artist];
+        FavArtistDpo * favArtist = [db getFavArtistById:[NSNumber numberWithInteger:[self.artist._id integerValue]]];
+        [db deleteManagedObject:favArtist];
         [db persistData];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                         message:@"Artist removed from favorites"
                                                        delegate:self

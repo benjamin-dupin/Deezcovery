@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "ArtistDpo.h"
+#import "FavArtistDpo.h"
 
 @interface DBManager : NSObject
 
@@ -30,5 +30,5 @@
 #pragma mark - Domain related feature -
 - (NSArray *)fetchArtists;
 - (NSArray *)fetchAllByName:(NSString *)enityName;
-- (ArtistDpo *) getArtistById:(NSNumber *)artistId;
+- (FavArtistDpo *) getFavArtistById:(NSNumber *)artistId;
 @end
