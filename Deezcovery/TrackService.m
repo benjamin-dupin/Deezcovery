@@ -3,6 +3,7 @@
 //  Deezcovery
 //
 
+#import "FavTrackDpo.h"
 #import "TrackService.h"
 #import "Track.h"
 #import "SessionManager.h"
@@ -52,6 +53,22 @@ static TrackService *sharedInstance = nil;
     }
     
     return tracks;
+}
+
+- (NSMutableArray *) getTracksByFavTrackDpos:(NSArray *)favTrackDpos {
+    
+    NSMutableArray * result = [@[] mutableCopy];
+    
+    for (FavTrackDpo *trackDpo in favTrackDpos) {
+        Track * track = [[Track alloc]init];
+        track._id = [trackDpo.id stringValue];
+        track.title = trackDpo.title;
+        track.previewData = trackDpo.track;
+        [result addObject:track];
+    }
+    
+    return result;
+    
 }
 
 

@@ -10,4 +10,6 @@
 + (instancetype)sharedInstance;
 
 - (NSMutableArray *) getTracksByAlbum:(Album *) album;
+
+- (NSMutableArray *) getTracksByFavTrackDpos:(NSArray *)favTrackDpos;
 @end

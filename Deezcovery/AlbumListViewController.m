@@ -46,16 +46,7 @@
     
     [self setTitle:self.artist.name];
     
-    //how you get albums? via web or coredata
-    self.artistAlbums = [self.albumService getAlbumsByArtist:self.artist];
-    [self.albums reloadData];
-    
-    if ([self.artistAlbums count] == 0) {
-        [self loadFavAlbums];
-    }
-    else{
-        [self loadAlbums];
-    }
+    [self loadAlbums];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,6 +102,37 @@
 
 - (void) loadAlbums {
     
+    if (self.controlFav == YES) {
+        [self loadAlbumsFromDatabase];
+    } else {
+        [self loadAlbumsFromDeezer];
+    }
+}
+
+- (void) loadAlbumsFromDatabase {
+    
+    @try {
+        DBManager *db = [DBManager sharedInstance];
+        
+        self.artistAlbums = [self.albumService getAlbumsByFavAlbumsArray:[db getAlbumsByArtist:[NSNumber numberWithInteger:[self.artist._id integerValue]]]];
+        
+        [self.albums reloadData];
+    }
+    @catch(NSException *exception) {
+        
+        //Gestion des exceptions
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Impossible to load favorites."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void) loadAlbumsFromDeezer {
+    
     @try {
         
         self.artistAlbums = [self.albumService getAlbumsByArtist:self.artist];
@@ -140,88 +162,30 @@
     
 }
 
--(void) loadFavAlbums {
-    @try {
-        
-        DBManager *db = [DBManager sharedInstance];
-        
-        //tool conversion NSString to NSnumber
-        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        f.numberStyle = NSNumberFormatterDecimalStyle;
-        
-        // Récupérer les favoris
-        NSArray * favAlbum = [db getAlbumsByArtist:[f numberFromString:self.artist._id]];
-        
-        if ([favAlbum count] == 0) {
-            // Si aucun favoris
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No favorite"
-                                                            message:@"You do not have any favorites"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            
-            [alert show];
-        } else {
-            // Sinon, convertion ArtistDpo -> Artist
-            self.artistAlbums = [[NSMutableArray alloc]init];
-            
-            self.artistAlbums = [self.albumService getAlbumsByFavAlbumsArray:favAlbum];
-
-            [self.albums reloadData];
-            
-        }
-        
-    }
-    
-    @catch(NSException *exception) {
-        
-        //Gestion des exceptions
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                        message:@"Impossible to load favorites."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
 - (IBAction)didTouchOnAddToFavButton:(id)sender {
     
     @try {
-        
-        NSNumber *artistId = [NSNumber numberWithInteger:[self.artist._id integerValue]];
-        
-        DBManager * db = [DBManager sharedInstance];
-        
         // Si l'artiste n'est pas déjà en fav
-        if ([db getFavArtistById:artistId] == nil) {
+        if ([[ArtistService sharedInstance]isArtistAlreadyInFav:self.artist] == NO) {
             
-            // Création du FavArtistDpo
-            FavArtistDpo * favArtist = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
-            favArtist.id = artistId;
-            favArtist.name = self.artist.name;
-            favArtist.picture = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.artist.picture]];
+            // Alerte d'attente
+            UIAlertView *baseAlert = [[UIAlertView alloc] initWithTitle:@"Please wait..."
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:nil];
+            [baseAlert show];
             
-            // TODO
-            // Pour chaque album de l'artiste
-                        for (Album *album in self.artistAlbums) {
-                            // Création du FavAlbumDpo
-                            FavAlbumDpo * favAlbum = [db createManagedObjectWithName:NSStringFromClass([FavAlbumDpo class])];
-                            favAlbum.id = [NSNumber numberWithInteger:[album._id integerValue]];
-                            favAlbum.title = album.title;
-                            favAlbum.cover = [NSData dataWithContentsOfURL:[NSURL URLWithString:album.cover]];
-                            favAlbum.artist = favArtist;
-                        }
-            
-            //Commit
-            [db persistData];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                            message:@"Artist added to favorites."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+                
+                // Mise en favoris
+                [[ArtistService sharedInstance] addArtistToFavorite:self.artist];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // A la fin, on ferme l'alerte
+                    [baseAlert dismissWithClickedButtonIndex:0 animated:YES];
+                });
+            });
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
                                                             message:@"This artist is already in your favorites. Do you want to want to delete it ?"
@@ -252,20 +216,25 @@
     // Méthode appelée quand on clique sur le bouton d'une UIAlertView
     
     if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Delete"]) {
-        DBManager * db = [DBManager sharedInstance];
-        FavArtistDpo * favArtist = [db getFavArtistById:[NSNumber numberWithInteger:[self.artist._id integerValue]]];
-        [db deleteManagedObject:favArtist];
-        [db persistData];
+        // Alerte d'attente
+        UIAlertView *baseAlert = [[UIAlertView alloc] initWithTitle:@"Please wait..."
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:nil];
+        [baseAlert show];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                        message:@"Artist removed from favorites"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+            
+            // Suppression du favoris
+            [[ArtistService sharedInstance] removeArtistFromFavorite:self.artist];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // A la fin, on ferme l'alerte
+                [baseAlert dismissWithClickedButtonIndex:0 animated:YES];
+            });
+        });
         
-        UINavigationController *navController = self.navigationController;
-        [navController popViewControllerAnimated:YES];
     }
     
 }
@@ -275,6 +244,7 @@
     if ([segue.identifier isEqualToString:SEGUE_ID]){
         TrackListViewController *controller = segue.destinationViewController;
         controller.album = self.selectedAlbum;
+        controller.controlFav = self.controlFav;
     }
 }
 

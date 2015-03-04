@@ -73,19 +73,16 @@
     
     @try {
         
+        // Si le text field est renseigné
         if ([self.searchTxtField.text length ] > 0) {
             
-            // Si le text field est renseigné
-            
             self.relatedArtists = [[NSMutableArray alloc]init];
-            
             self.relatedArtists = [self.artistService getRelatedArtists:self.searchTxtField.text];
             
             [self.artists reloadData];
             
             self.controlFav = NO;
         }
-        
     }
     
     @catch(NSException *exception) {
@@ -93,7 +90,7 @@
         //Gestion des exceptions
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                        message:@"Impossible to find this artist."
+                                                        message:@"Can not find this artist."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -111,6 +108,7 @@
         // Récupérer les favoris
         NSArray * favArtists = [db fetchAllByName:NSStringFromClass([FavArtistDpo class])];
         
+        // Si aucun favoris
         if ([favArtists count] == 0) {
             // Si aucun favoris
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No favorite"
@@ -120,15 +118,15 @@
                                                   otherButtonTitles:nil];
             
             [alert show];
-        } else {
-            // Sinon, convertion ArtistDpo -> Artist
-            self.relatedArtists = [[NSMutableArray alloc]init];
-            
-            self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favArtists];
-            //self.relatedArtists = [self.artistService getArtistsByArtistDpoArray:favoriteArtists];
-            [self.artists reloadData];
-            
+        }
+        // Sinon, récupération des favoris
+        else {
             self.controlFav = YES;
+            
+            self.relatedArtists = [[NSMutableArray alloc]init];
+            self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favArtists];
+            
+            [self.artists reloadData];
         }
         
     }
@@ -138,7 +136,7 @@
         //Gestion des exceptions
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                        message:@"Impossible to load favorites."
+                                                        message:@"Can not load favorites."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -164,6 +162,7 @@
     Artist *artist = self.relatedArtists[indexPath.row];
     UIImage *image= artist.UIpicture;
     
+    // Chargement async des images
     //if image is already saved
     if(image){
         cell.textLabel.text = artist.name;
@@ -185,10 +184,6 @@
         });
     }
     
-    // Chargement sync des images
-    //NSData *dataPicture = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:artist.picture]];
-    //cell.imageView.image = [UIImage imageWithData:dataPicture];
-    
     return cell;
 }
 
@@ -197,6 +192,7 @@
     if ([segue.identifier isEqualToString:SEGUE_ID]){
         AlbumListViewController *controller = segue.destinationViewController;
         controller.artist = self.selectedArtist;
+        controller.controlFav = self.controlFav;
     }
 }
 
@@ -221,13 +217,11 @@
             
             //On récupère l'artiste
             self.selectedArtist = self.relatedArtists[indexPath.row];
-            NSNumber *artistId = [NSNumber numberWithInteger:[self.selectedArtist._id integerValue]];
-            DBManager * db = [DBManager sharedInstance];
             
-            //Si l'artiste n'est pas un favori
-            if ([db getFavArtistById:artistId] == nil) {
+            //Si l'artiste n'est pas en favori
+            if ([self.artistService isArtistAlreadyInFav:self.selectedArtist] == NO) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                                message:@"This artist is not in your favorites. Do you want to add it ?"
+                                                                message:@"Add this artist to your favorites ?"
                                                                delegate:self
                                                       cancelButtonTitle:@"Cancel"
                                                       otherButtonTitles:@"Add", nil];
@@ -236,10 +230,10 @@
             //Si l'artiste est un favori
             else {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                                message:@"This artist is already in your favorites. Do you want to delete it ?"
+                                                                message:@"Remove this artist from your favorites ?"
                                                                delegate:self
                                                       cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Delete", nil];
+                                                      otherButtonTitles:@"Remove", nil];
                 [alert show];
             }
         }
@@ -252,38 +246,58 @@
     // Méthode appelée quand on clique sur le bouton d'une UIAlertView
     DBManager * db = [DBManager sharedInstance];
     
-    if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Delete"]) {
-        //ArtistDpo * artist = [db getArtistById:[NSNumber numberWithInteger:[self.selectedArtist._id integerValue]]];
-        FavArtistDpo * favArtist = [db getFavArtistById:[NSNumber numberWithInteger:[self.selectedArtist._id integerValue]]];
-        [db deleteManagedObject:favArtist];
-        [db persistData];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                        message:@"Artist removed from favorites"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+    // Bouton Suppression
+    if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Remove"]) {
         
-        //On met à jour l'affichage de la liste des favoris si on est en train de l'afficher
-        if (self.controlFav == YES) {
-            NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([FavArtistDpo class])];
-            self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favoriteArtists];
-            [self.artists reloadData];
-        }
+        // Alerte d'attente
+        UIAlertView *baseAlert = [[UIAlertView alloc] initWithTitle:@"Please wait..."
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:nil];
+        [baseAlert show];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+            
+            // Suppression du favoris
+            [self.artistService removeArtistFromFavorite:self.selectedArtist];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // A la fin, on ferme l'alerte
+                [baseAlert dismissWithClickedButtonIndex:0 animated:YES];
+                
+                //On met à jour l'affichage de la liste des favoris si on est en train de l'afficher
+                if (self.controlFav == YES) {
+                    NSArray * favoriteArtists = [db fetchAllByName:NSStringFromClass([FavArtistDpo class])];
+                    self.relatedArtists = [self.artistService getArtistsByFavArtistDpos:favoriteArtists];
+                    [self.artists reloadData];
+                }
+            });
+        });
+        
+        
     }
+    // Bouton ajout dans les favoris
     else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Add"]) {
-        FavArtistDpo * fav = [db createManagedObjectWithName:NSStringFromClass([FavArtistDpo class])];
-        NSNumber *artistId = [NSNumber numberWithInteger:[self.selectedArtist._id integerValue]];
-        fav.id = artistId;
-        fav.name = self.selectedArtist.name;
-        fav.picture = UIImagePNGRepresentation(self.selectedArtist.UIpicture);
-        [db persistData];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Favorite"
-                                                        message:@"Artist added to favorites."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        
+        // Alerte d'attente
+        UIAlertView *baseAlert = [[UIAlertView alloc] initWithTitle:@"Please wait..."
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:nil];
+        [baseAlert show];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul), ^{
+            
+            // Mise en favoris
+            [self.artistService addArtistToFavorite:self.selectedArtist];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // A la fin, on ferme l'alerte
+                [baseAlert dismissWithClickedButtonIndex:0 animated:YES];
+            });
+        });
     }
 }
 @end

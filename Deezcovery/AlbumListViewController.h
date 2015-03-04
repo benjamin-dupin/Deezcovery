@@ -9,5 +9,6 @@
 @interface AlbumListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (strong, nonatomic) Artist *artist;
+@property (assign) BOOL controlFav;
 
 @end

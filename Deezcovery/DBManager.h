@@ -32,4 +32,5 @@
 - (NSArray *)fetchAllByName:(NSString *)enityName;
 - (FavArtistDpo *) getFavArtistById:(NSNumber *)artistId;
 - (NSArray *) getAlbumsByArtist:(NSNumber *)artistId;
+- (NSArray *) getTracksByAlbum:(NSNumber *)albumId;
 @end

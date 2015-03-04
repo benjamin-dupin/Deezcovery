@@ -11,6 +11,8 @@
     if (self){
         self.title= nil;
         self.preview = nil;
+        self._id = nil;
+        self.previewData = nil;
     }
     
     return self;

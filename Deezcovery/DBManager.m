@@ -218,4 +218,14 @@ static DBManager *sharedInstance = nil;
     return fetchedAlbums;
 
 }
+
+- (NSArray *) getTracksByAlbum:(NSNumber *)albumId {
+    
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(album.id = %@)", albumId];
+    
+    NSArray * fetchedTracks = [self fetchEntity:@"FavTrackDpo" predicate:predicate prefetchedRelations:nil sortKey:nil ascending:YES error:nil];
+    
+    return fetchedTracks;
+    
+}
 @end

@@ -23,6 +23,12 @@
             // Attribut = valeur de la clef
             [track setValue:JSON[key] forKey:key];
         }
+        // Sinon, si la clef vaut id
+        else if ([key isEqualToString:@"id"]) {
+            
+            // Attribut _id = valeur de la clef id
+            track._id = JSON[key];
+        }
     }
     
     return track;

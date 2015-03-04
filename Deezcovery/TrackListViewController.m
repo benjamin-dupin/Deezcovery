@@ -3,6 +3,7 @@
 //  Deezcovery
 //
 
+#import "DBManager.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 #import "TrackListViewController.h"
@@ -68,6 +69,41 @@
 
 - (void) loadTracks {
     
+    if (self.controlFav == YES) {
+        [self loadTracksFromDatabase];
+    } else {
+        [self loadTracksFromDeezer];
+    }
+    
+}
+
+- (void) loadTracksFromDatabase {
+    
+    @try {
+        DBManager *db = [DBManager sharedInstance];
+        
+        self.tracksByAlbum = [[NSMutableArray alloc]init];
+        self.tracksByAlbum = [self.trackService getTracksByFavTrackDpos:[db getTracksByAlbum:[NSNumber numberWithInteger:[self.album._id integerValue]]]];
+        
+        [self.tracks reloadData];
+    }
+    @catch(NSException *exception) {
+        
+        //Gestion des exceptions
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                        message:@"Impossible to load favorites."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    
+}
+
+- (void) loadTracksFromDeezer {
+    
     @try {
         
         // Chargement des titres
@@ -99,6 +135,7 @@
         [alert show];
     }
     
+    
 }
 
 #pragma mark - UITableView Delegate
@@ -108,9 +145,20 @@
     
     Track *selectedTrack = self.tracksByAlbum[indexPath.row];
     
-    NSURL *url = [NSURL URLWithString:[selectedTrack.preview stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSData *data = nil;
     
-    self.player = [[AVPlayer alloc] initWithURL:url];
+    // Si Track en favoris
+    if (self.controlFav == YES) {
+        data = selectedTrack.previewData;
+    }
+    // Sinon
+    else {
+        // Téléchargement de la track depuis Deezer
+        NSURL *url = [NSURL URLWithString:[selectedTrack.preview stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        data = [[NSData alloc] initWithContentsOfURL:url];
+    }
+    
+    self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
     
     [self.player play];
 }

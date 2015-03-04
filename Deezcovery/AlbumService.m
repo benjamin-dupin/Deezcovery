@@ -55,7 +55,7 @@ static AlbumService *sharedInstance = nil;
 
 - (NSMutableArray *)getAlbumsByFavAlbumsArray:(NSArray *)albums{
     
-    NSMutableArray * result = [[NSMutableArray alloc]init];
+    NSMutableArray * result = [@[] mutableCopy];
     
     for (FavAlbumDpo *albumdpo in albums) {
         Album *album1 = [[Album alloc]init];

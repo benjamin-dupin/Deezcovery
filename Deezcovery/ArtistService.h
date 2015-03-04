@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FavArtistDpo.h"
 #import "Artist.h"
 
 @interface ArtistService : NSObject
@@ -14,4 +15,10 @@
 - (NSMutableArray *) getArtistsByFavArtistDpos:(NSArray *)favArtistDpoArray;
 
 - (Artist *) getArtistById:(NSNumber*)artistId;
+
+- (BOOL) isArtistAlreadyInFav:(Artist *)artist;
+
+- (void) addArtistToFavorite:(Artist *)artist;
+
+- (void) removeArtistFromFavorite:(Artist *)artist;
 @end
