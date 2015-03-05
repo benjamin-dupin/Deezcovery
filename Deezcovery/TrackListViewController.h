@@ -14,4 +14,6 @@
 @property (strong, nonatomic) AVAudioPlayer *player;
 @property (assign) BOOL controlFav;
 
+@property (strong, nonatomic) Artist *artist;
+
 @end

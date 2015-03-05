@@ -79,9 +79,9 @@
             self.relatedArtists = [[NSMutableArray alloc]init];
             self.relatedArtists = [self.artistService getRelatedArtists:self.searchTxtField.text];
             
-            [self.artists reloadData];
+            //[self.artists reloadData];
             
-            self.controlFav = NO;
+            //self.controlFav = NO;
         }
     }
     
@@ -95,6 +95,12 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+    }
+
+    @finally {
+        [self.artists reloadData];
+        
+        self.controlFav = NO;
     }
 }
 - (IBAction)didTouchFavButton:(id)sender {

@@ -101,7 +101,6 @@
 }
 
 - (void) loadAlbums {
-    
     if (self.controlFav == YES) {
         [self loadAlbumsFromDatabase];
     } else {
@@ -139,15 +138,23 @@
         
         [self.albums reloadData];
         
-        if ([self.artistAlbums count] == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No album"
-                                                            message:@"There is no album for this artist."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
         
+        if ([self.artistAlbums count] == 0) {
+            
+            //Si on a récupéré 0 albums, on contrôle si c'est un favoris et on load depuis la base
+            if ([[ArtistService sharedInstance]isArtistAlreadyInFav:self.artist] == YES) {
+                [self loadAlbumsFromDatabase];
+            }
+            else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No album"
+                                                                message:@"There is no album for this artist."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            
+        }
         
     }
     
@@ -232,8 +239,16 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 // A la fin, on ferme l'alerte
                 [baseAlert dismissWithClickedButtonIndex:0 animated:YES];
+                
+                //on revient à la page des favoris
+                [self.navigationController popViewControllerAnimated:YES];
             });
+            
+            
         });
+        
+        
+        
         
     }
     
@@ -245,6 +260,7 @@
         TrackListViewController *controller = segue.destinationViewController;
         controller.album = self.selectedAlbum;
         controller.controlFav = self.controlFav;
+        controller.artist = self.artist;
     }
 }
 

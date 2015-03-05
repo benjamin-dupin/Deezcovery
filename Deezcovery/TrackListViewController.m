@@ -10,6 +10,8 @@
 #import "TrackService.h"
 #import "Track.h"
 
+#import "ArtistService.h"
+
 #define CELL_ID @"TRACK_CELL_ID"
 
 @interface TrackListViewController ()
@@ -113,14 +115,21 @@
         
         // Si aucun titre
         if ([self.tracksByAlbum count] == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No track"
-                                                            message:@"There is no track for this album."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            
+            //Si on a récupéré 0 track, on contrôle si c'est un favoris et on load depuis la base
+            if ([[ArtistService sharedInstance]isArtistAlreadyInFav:self.artist] == YES) {
+                [self loadTracksFromDatabase];
+            }
+            else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No track"
+                                                                message:@"There is no track for this album."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            
         }
-        
         
     }
     
